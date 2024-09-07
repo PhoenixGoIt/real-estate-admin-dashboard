@@ -11,13 +11,13 @@ const Search: React.FC<SearchItem> = ({title, className}) => {
     const [isSearchOpen, setIsSearchOpen] = useState(false);  
       return (
         <div className={`w-full relative flex-grow ${isSearchOpen ? 'block' : 'hidden'} lg:block`}>
-          <div className=" absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <div className="absolute inset-y-0 left-0 pl-3 flex pointer-events-none item-center">
             <Image 
               src='/search.svg'
               alt='search'
               width={16}
               height={16}
-              className='text-gray-400'
+              className='text-gray-400 h-4'
             />
           </div>
           <input

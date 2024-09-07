@@ -1,5 +1,5 @@
-import Count from '@/lib/Count';
-import BarChart from '@/lib/chart/BarChart';
+import Count from '@/components/ui/Count';
+import BarChart from '@/components/ui/chart/BarChart';
 import Image from 'next/image'
 import React from 'react'
 import RevenueChart from '../ui/RevenueChart';

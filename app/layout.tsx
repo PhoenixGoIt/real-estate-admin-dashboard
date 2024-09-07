@@ -11,6 +11,7 @@ const inter = Manrope({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Real Estate Admin Dash Board",
   description: "Real Estate Admin Dash Board",
+  icons: '/logo.svg'
 };
 
 const queryClient = new QueryClient()

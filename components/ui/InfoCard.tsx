@@ -1,5 +1,5 @@
 "use client"
-import Count from '@/lib/Count';
+import Count from '@/components/ui/Count';
 import React from 'react';
 import { PieChart, Pie, Cell } from 'recharts'; 
 
