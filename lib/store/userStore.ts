@@ -52,18 +52,18 @@ export const useUserStore = create<UserState>()(
         isLogin: false,
         token: getTokenFromLocalStorage(),
         login: (user) => set({ user, isLogin: true }),
-        logout: () => set({ user: null, isLogin: false }),
+        logout: () => {
+          set({ user: null, isLogin: false })
+          set({ token: null });
+          if (typeof window !== 'undefined') {
+            localStorage.removeItem('jwtToken');
+          }
+        },
         setToken: (token) => {
           if (typeof window !== 'undefined') {
             localStorage.setItem('jwtToken', token);
           }
           set({ token });
-        },
-        removeToken: () => {
-          if (typeof window !== 'undefined') {
-            localStorage.removeItem('jwtToken');
-          }
-          set({ token: null });
         },
       }),
       {
@@ -73,3 +73,5 @@ export const useUserStore = create<UserState>()(
     { name: 'UserStore' } // имя для DevTools
   )
 );
+
+

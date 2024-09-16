@@ -51,10 +51,26 @@ return mutation
 }
 
 export const useGetUser = () => {
-    const { data, isSuccess, error } = useQuery({
-      queryKey: ['getUser'],
-      queryFn: GetUserApi,
+    const { data, isSuccess, error } = useMutation({
+      mutationKey: ['getUser'],
+      mutationFn: GetUserApi,
+      onSuccess: (response) => {
+        console.log('Registration successful: ', response);
+        
+    },
+
+    onError: (error) => {
+      console.error('Registration failed:', error);
+    },
     });
     return { data, isSuccess, error };
   };
-  
+
+export const useLogout = () => {
+  const { logout } = useUserStore();
+  const handleLogout = () => {
+    logout();
+    console.log("Successful logout");
+  };
+  return handleLogout;
+};

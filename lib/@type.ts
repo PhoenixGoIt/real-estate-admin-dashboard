@@ -42,7 +42,6 @@ export interface UserState {
   login: (user: User) => void;
   logout: () => void;
   setToken: (token: string) => void;
-  removeToken: () => void;
 }
 
 export interface RegisterForm {

@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Input } from '../ui/Input';
 import { useRegister } from '@/lib/api/auth/auth-quary';
 import { useUserStore } from '@/lib/store/userStore';
+import { useRouter } from 'next/navigation';
 
 const SignUp = () => {
   const [name, setName] = useState('');
@@ -12,10 +13,13 @@ const SignUp = () => {
   const [rememberMe, setRememberMe] = useState(false);
 
   const registerMutation = useRegister();
+  
+  
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     registerMutation.mutate({username, email, password, name});
+   
   };
 
   return (

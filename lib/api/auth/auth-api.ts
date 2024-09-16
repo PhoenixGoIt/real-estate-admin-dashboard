@@ -23,3 +23,4 @@ export async function LoginApi(data: LoginForm) {
 export async function GetUserApi() {
     return await axios.get(`${process.env.NEXT_PUBLIC_GETUSER_API}`)
 }
+
