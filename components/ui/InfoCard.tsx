@@ -30,7 +30,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ data }) => {
     <div className="bg-white p-4 rounded-lg shadow-md flex items-center justify-between">
       <div>
         <h3 className="text-sm text-gray-500 font-medium">{item.title}</h3>
-        <p className="text-2xl font-bold mt-1"><Count sum={item.totalProperties} /></p>
+        <div className="text-2xl font-bold mt-1"><Count sum={item.totalProperties} /></div>
       </div>
       <div className="w-16 h-16">
   <PieChart width={80} height={80}>

@@ -17,7 +17,7 @@ const Search: React.FC<SearchItem> = ({title, className}) => {
               alt='search'
               width={16}
               height={16}
-              className='text-gray-400 h-4'
+              className='text-gray-400'
             />
           </div>
           <input

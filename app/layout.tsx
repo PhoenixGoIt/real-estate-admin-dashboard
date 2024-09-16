@@ -5,6 +5,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import "./globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Providers from "@/lib/Prividers";
+import SignUp from "@/components/SingUp/SingUp";
 
 const inter = Manrope({ subsets: ["latin"] });
 

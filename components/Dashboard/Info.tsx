@@ -1,9 +1,7 @@
 "use client"
 import React from 'react'
-import dynamic from 'next/dynamic'
-// import InfoCard from '../ui/InfoCard'
+import InfoCard from '../ui/InfoCard'
 
-const InfoCard = dynamic(() => import('../ui/InfoCard'), { ssr: false })
 
 function Info() {
     const sale = [

@@ -1,5 +1,4 @@
-import { propertyListItem } from "@/lib/@type"
-import axios, { AxiosResponse } from "axios"
+import axios from "axios"
 
 export async function GetAllPropertyApi() {
     return await axios.get("http://localhost:3000/property")

@@ -1,9 +1,17 @@
 "use client"
 import { SideBar } from "@/components/SideBar"
+import SignUp from "@/components/SingUp/SingUp"
+import { setAuthHeader } from "@/lib/api/auth/auth-api"
+import { useGetUser } from "@/lib/api/auth/auth-quary"
+import { useUserStore } from "@/lib/store/userStore"
 import Image from "next/image"
 import Link from "next/link"
+import { useEffect } from "react"
 
 const layout = ({children} : {children: React.ReactNode}) => {
+
+  const data = useGetUser()
+  console.log(data)
   return (
     <div className="flex flex-col h-screen">
     <header className="w-full">
@@ -52,7 +60,7 @@ const layout = ({children} : {children: React.ReactNode}) => {
         {/* Icons and user info */}
         <div className="flex items-center gap-[15px]">
           
-          <Image src={'notification.svg'} alt='notification' width={24} height={24} />
+          <Image src={'/notification.svg'} alt='notification' width={24} height={24} />
           
           {/* User info - simplified for mobile */}
           <div className="flex items-center space-x-2">
@@ -63,7 +71,7 @@ const layout = ({children} : {children: React.ReactNode}) => {
               className="w-8 h-8 rounded-full"
             /> */}
             <div className="hidden lg:block">
-              <p className="text-sm font-medium">Hawkins Maru</p>
+              <p className="text-sm font-medium"></p>
               <p className="text-xs text-gray-500">Company Manager</p>
             </div>
           </div>
@@ -79,6 +87,7 @@ const layout = ({children} : {children: React.ReactNode}) => {
     </div>
   </div>
   )
+          
 }
 
 export default layout

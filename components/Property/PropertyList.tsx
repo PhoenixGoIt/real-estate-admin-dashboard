@@ -24,7 +24,7 @@ function Property() {
     <>
     <div className='w-full h-full'>
         <div className='flex items-center mb-6  '>
-        <h1 className='text-black font-[700] text-3xl'>Property</h1>
+       <h1  className='text-black font-[700] text-3xl'>Property</h1>
         <Link href="/property-list/add-property" className='ml-auto'>
         <Button/>
         </Link>
