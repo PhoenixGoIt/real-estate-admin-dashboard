@@ -5,7 +5,8 @@ import { TypeSelect } from '../ui/Selects'
 import Link from 'next/link'
 import { property_list } from '@/lib/link'
 import Image from 'next/image'
-import { GMap } from '../Map'
+import { TextArea } from '../ui/TextArena'
+import MapBox from '../ui/MapBox'
 const AddProperty = () => { 
   return (
     <div className='ml-auto mr-auto w-[55%] h-full'>
@@ -24,7 +25,7 @@ const AddProperty = () => {
                     </div>
                     <div className='mt-6'> 
                       <div className='mb-3'><label className='text-md font-[500]'>Description</label></div>
-                      <Input title='Description'/>
+                      <TextArea title='Description'/>
                     </div>
                     <div className='mt-6'>
                       <div className='mb-3'><label className='text-md font-[500]'>Price<span className='text-red-600'>*</span></label></div>
@@ -34,9 +35,17 @@ const AddProperty = () => {
                       <TypeSelect />
                       <span className='text-red-600 ml-3 text-xl'>*</span>
                     </div>
-                        <div className='w-[450px] h-[350px] ml-auto '>
-                           <GMap/>
-                      </div>  
+                    <div className='w-[450px] h-[350px]  mt-6'>
+                    <div className="min-h-screen flex items-center justify-center">
+                      <div className="p-4 w-full max-w-3xl">
+                        <h1 className="text-2xl font-bold mb-4">Выбор местоположения на карте</h1>
+                        <MapBox />
+                      </div>
+                    </div>
+                    </div>
+                    <div>
+
+                    </div>
                     </div>
             </form>
         </div>
