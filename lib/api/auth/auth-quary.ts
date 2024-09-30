@@ -90,6 +90,7 @@ export const useGetUser = () => {
 export const useLogout = () => {
   const { logout } = useUserStore();
   const handleLogout = () => {
+    setAuthHeader('')
     logout();
     console.log("Successful logout");
   };
