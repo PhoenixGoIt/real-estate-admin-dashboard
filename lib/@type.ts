@@ -28,18 +28,26 @@ export interface PropertyCardProps {
   }
 
 export interface User {
-  id: string;
-  name: string;
-  email: string;
-  blocked: boolean,
-  confirmed: boolean
-}
-
+    id: number;
+    username: string;
+    email: string;
+    provider: string;
+    confirmed: boolean;
+    blocked: boolean;
+    createdAt: string;
+    updatedAt: string;
+    name: string | null;
+  }
+  
+export interface AuthResponse {
+    jwt: string;
+    user: User;
+  }
 export interface UserState {
   user: User | null;
   isLogin: boolean;
   token: string | null,
-  login: (user: User) => void;
+  setUser: (user: User) => void;
   logout: () => void;
   setToken: (token: string) => void;
 }
@@ -53,6 +61,5 @@ export interface RegisterForm {
 
 export interface LoginForm {
   identifier: string
-  email: string 
   password: string
 }

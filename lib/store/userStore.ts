@@ -51,18 +51,11 @@ export const useUserStore = create<UserState>()(
         user: null,
         isLogin: false,
         token: getTokenFromLocalStorage(),
-        login: (user) => set({ user, isLogin: true }),
+        setUser: (user) => set({ user, isLogin: true }),
         logout: () => {
-          set({ user: null, isLogin: false })
-          set({ token: null });
-          if (typeof window !== 'undefined') {
-            localStorage.removeItem('jwtToken');
-          }
+          set({ user: null, isLogin: false, token: null })
         },
         setToken: (token) => {
-          if (typeof window !== 'undefined') {
-            localStorage.setItem('jwtToken', token);
-          }
           set({ token });
         },
       }),

@@ -1,13 +1,17 @@
+"use client"
 import { useMutation, useQuery } from "@tanstack/react-query"
 import { GetUserApi, LoginApi, RegisterApi, setAuthHeader } from "./auth-api"
-import { LoginForm, RegisterForm } from "@/lib/@type"
+import { LoginForm, RegisterForm, AuthResponse, User } from "@/lib/@type"
 import { useUserStore } from "@/lib/store/userStore";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { AxiosResponse } from "axios";
 
 
 
 export const useRegister = () => {
-    const { setToken, login, token } = useUserStore();
-
+    const { setToken, setUser, token } = useUserStore();
+    const router = useRouter();
     const mutation = useMutation({
         mutationKey: ['register'],
         mutationFn: (data: RegisterForm) => RegisterApi(data),
@@ -17,7 +21,8 @@ export const useRegister = () => {
         if (token) {
             setAuthHeader(token);
         }
-        login(response.data.user)
+        setUser(response.data.user)
+        
       },
       onError: (error) => {
         console.error('Registration failed:', error);
@@ -27,7 +32,7 @@ export const useRegister = () => {
   return mutation
 }
 export const useLogin = () => {
-    const { setToken, login, token } = useUserStore();
+    const { setToken, setUser, token } = useUserStore();
 
     const mutation = useMutation({
         mutationKey: ['login'],
@@ -39,7 +44,7 @@ export const useLogin = () => {
         if (token) {
             setAuthHeader(token);
         }
-        login(response.data.user)
+        setUser(response.data.user)
     },
 
     onError: (error) => {
@@ -51,20 +56,36 @@ return mutation
 }
 
 export const useGetUser = () => {
-    const { data, isSuccess, error } = useMutation({
-      mutationKey: ['getUser'],
-      mutationFn: GetUserApi,
-      onSuccess: (response) => {
-        console.log('Registration successful: ', response);
-        
-    },
+  const { isLogin, token, setUser } = useUserStore();
+  const router = useRouter();
 
-    onError: (error) => {
-      console.error('Registration failed:', error);
+  const { data, error, isLoading, refetch } = useQuery<User, Error>({
+    queryKey: ['user'],
+    queryFn: async () => {
+      const response: AxiosResponse<User> = await GetUserApi();
+      return response.data;
     },
-    });
-    return { data, isSuccess, error };
-  };
+    enabled: false,
+  });
+
+  useEffect(() => {
+    if (isLogin && token) {
+      setAuthHeader(token);
+      refetch();
+    } else if (isLogin === false) {
+      router.push('/auth');
+    }
+  }, [isLogin, token, refetch, router]);
+
+  useEffect(() => {
+    if (data) {
+      console.log(data)
+      setUser(data);
+    }
+  }, [data, setUser]);
+
+  return { error, isLoading };
+};
 
 export const useLogout = () => {
   const { logout } = useUserStore();

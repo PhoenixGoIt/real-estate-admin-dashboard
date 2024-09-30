@@ -20,6 +20,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.1.8",
+    "errors": "^0.3.0",
     "json-server": "^1.0.0-beta.2",
     "lucide-react": "^0.424.0",
     "next": "14.2.5",
@@ -28,10 +29,12 @@
     "react-countup": "^6.5.3",
     "react-dom": "^18",
     "react-slick": "^0.30.2",
-    "recharts": "^2.12.7",
+    "recharts": "^2.13.0-alpha.5",
+    "removed": "^0.0.5",
     "slick-carousel": "^1.8.1",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
+    "the": "^1.0.2",
     "zustand": "^4.5.5"
   },
   "devDependencies": {

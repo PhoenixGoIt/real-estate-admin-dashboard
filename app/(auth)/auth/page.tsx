@@ -1,14 +1,15 @@
-import SingUp from '@/components/SingUp/SingUp'
+
+import Auth from '@/components/Auth/Auth'
 import React from 'react'
 const page = () => {
   return (
     <section>
-      <SingUp />
+      <Auth />
     </section>
   )
 }
 
-page.getLayout = (page: React.ReactNode) => page;
+
 
 
 export default page

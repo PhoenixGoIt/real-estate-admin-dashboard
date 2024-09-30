@@ -1,51 +1,63 @@
 "use client"
 import React, { useState } from 'react';
 import { Input } from '../ui/Input';
-import { useRegister } from '@/lib/api/auth/auth-quary';
-import { useUserStore } from '@/lib/store/userStore';
-import { useRouter } from 'next/navigation';
+import { useLogin, useRegister } from '@/lib/api/auth/auth-quary';
+import { withGuest } from '@/lib/withGuest';
 
-const SignUp = () => {
+const Auth = () => {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [isSignUp, setIsSignUp] = useState(false); // новое состояние для переключения форм
 
   const registerMutation = useRegister();
-  
-  
+  const loginMutation = useLogin()
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    registerMutation.mutate({username, email, password, name});
-   
+    console.log('name:', name)
+    if (isSignUp) {
+      registerMutation.mutate({ username, email, password, name });
+      console.log("Register submit");
+    } else {
+      const identifier = email
+      loginMutation.mutate({ identifier, password });
+      console.log("Login submit");
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6">Register</h2>
+        <h2 className="text-2xl font-bold mb-6">{isSignUp ? "Register" : "Login"}</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-            <label htmlFor="username" className="block text-md font-medium text-gray-700 mb-3">Name</label>
-            <Input
-              title='Enter your name'
-              id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
-          <div>
-            <label htmlFor="username" className="block text-md font-medium text-gray-700 mb-3">Username</label>
-            <Input
-              title='Enter your username'
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
+          {isSignUp && (
+            <div>
+              <label htmlFor="name" className="block text-md font-medium text-gray-700 mb-3">Name</label>
+              <Input
+                title='Enter your name'
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+          )}
+
+          {isSignUp && (
+            <div>
+              <label htmlFor="username" className="block text-md font-medium text-gray-700 mb-3">Username</label>
+              <Input
+                title='Enter your username'
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </div>
+          )}
+
           <div>
             <label htmlFor="email" className="block text-md font-medium text-gray-700 mb-3">Email</label>
             <Input
@@ -83,11 +95,13 @@ const SignUp = () => {
               </label>
             </div>
 
-            <div className="text-sm">
-              <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                Forgot Password?
-              </a>
-            </div>
+            {!isSignUp && (
+              <div className="text-sm">
+                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                  Forgot Password?
+                </a>
+              </div>
+            )}
           </div>
 
           <div>
@@ -95,7 +109,7 @@ const SignUp = () => {
               type="submit"
               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              Sign up
+              {isSignUp ? "Sign up" : "Log in"}
             </button>
           </div>
         </form>
@@ -110,19 +124,24 @@ const SignUp = () => {
               alt="Google logo"
               className="h-5 w-5 mr-2"
             />
-            Sign up with Google
+            {isSignUp ? "Sign up with Google" : "Log in with Google"}
           </button>
         </div>
 
-        <p className="mt-6 text-center text-sm text-gray-600">
-          Already have an account?{' '}
-          <a href="/auth/sign-in" className="font-medium text-indigo-600 hover:text-indigo-500">
-            Sign in
-          </a>
-        </p>
+        <div className="flex justify-center mt-6">
+          <p className="text-center text-sm text-gray-600">
+            {isSignUp ? "Already have an account?" : "Don't have an account?"}{' '}
+            <span
+              className="ml-1 font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer"
+              onClick={() => setIsSignUp(!isSignUp)} // переключаем состояние
+            >
+              {isSignUp ? "Sign in" : "Sign up"}
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   );
 };
 
-export default SignUp;
+export default withGuest(Auth);

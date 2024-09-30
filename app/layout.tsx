@@ -4,6 +4,9 @@ import { Manrope } from "next/font/google";
 import "./globals.css";
 
 import Providers from "@/lib/Prividers";
+import dynamic from "next/dynamic"
+
+const UserProvider = dynamic(() => import('@/lib/UserProvider'), { ssr: false })
 
 const inter = Manrope({ subsets: ["latin"] });
 
@@ -14,18 +17,19 @@ export const metadata: Metadata = {
 };
 
 
-export default function RootLayout({
+export default function  RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   
   return (
         <html lang="en">
           <body className={inter.className}>
             <Providers>
-              {children}
+              <UserProvider>
+                {children}
+              </UserProvider>
             </Providers>
           </body>
         </html>

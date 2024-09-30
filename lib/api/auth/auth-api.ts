@@ -1,5 +1,5 @@
-import { LoginForm, RegisterForm } from "@/lib/@type"
-import axios from "axios"
+import { LoginForm, RegisterForm, User } from "@/lib/@type"
+import axios, { AxiosResponse } from "axios"
 
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_HOST_API
 
@@ -20,7 +20,7 @@ export async function LoginApi(data: LoginForm) {
     return await axios.post(`${process.env.NEXT_PUBLIC_LOGIN_API}`, data)
 }
 
-export async function GetUserApi() {
+export async function GetUserApi(): Promise<AxiosResponse<User>> {
     return await axios.get(`${process.env.NEXT_PUBLIC_GETUSER_API}`)
 }
 
