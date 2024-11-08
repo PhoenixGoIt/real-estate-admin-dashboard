@@ -11,7 +11,7 @@ const Auth = () => {
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false); // новое состояние для переключения форм
-
+  
   const registerMutation = useRegister();
   const loginMutation = useLogin()
 
@@ -103,12 +103,12 @@ const Auth = () => {
               </div>
             )}
           </div>
-
+          <div>Error</div>
           <div>
             <button
               type="submit"
               className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            >
+            > 
               {isSignUp ? "Sign up" : "Log in"}
             </button>
           </div>

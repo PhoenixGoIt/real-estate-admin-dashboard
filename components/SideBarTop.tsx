@@ -1,9 +1,7 @@
 "use client"
-import { User } from "@/lib/@type"
 import { useUserStore } from "@/lib/store/userStore"
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
 
 const SideBarTop = () => {
   const {user} = useUserStore()

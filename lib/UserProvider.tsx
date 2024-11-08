@@ -4,9 +4,8 @@ import { useGetUser } from "@/lib/api/auth/auth-quary"
 import { ReactNode } from "react"
 
 const UserProvider = ({ children }: { children: ReactNode }) => {
-  const {  isLoading, error } = useGetUser();
+  const { isLoading } = useGetUser();
   if (isLoading) return <div >Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
 
   return <>{children}</>;
 }

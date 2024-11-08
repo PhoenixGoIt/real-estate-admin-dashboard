@@ -1,15 +1,26 @@
-'use client'
-import { useLogout } from '@/lib/api/auth/auth-quary'
-import React from 'react'
+// /app/profile/page.tsx
+'use client';
 
-const page = () => {
-  const handleLogout = useLogout();
+import React from 'react';
+import { useRouter } from 'next/navigation';
+import { useUserStore } from '@/lib/store/userStore';
+
+const ProfilePage = () => {
+  const { logout, setToken } = useUserStore();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    logout(); // Очистка данных пользователя в Zustand
+    setToken(null); // Обнуляем токен
+    router.push('/auth'); // Перенаправляем на страницу авторизации
+  };
+
   return (
     <div>
-      <h1>my profile</h1>
-      <button onClick={handleLogout}>LogOut</button>
+      <h1>My Profile</h1>
+      <button onClick={handleLogout}>Logout</button>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default ProfilePage;

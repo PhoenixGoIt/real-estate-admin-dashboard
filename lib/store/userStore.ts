@@ -1,15 +1,10 @@
+//userStore.ts
 "use client";
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { UserState } from '../@type';
+import { setAuthHeader } from '../api/auth/auth-api';
 
-// Функция для безопасного доступа к localStorage только на клиенте
-const getTokenFromLocalStorage = () => {
-  if (typeof window !== 'undefined') {
-    return localStorage.getItem('jwtToken');
-  }
-  return null;
-};
 
 export const useUserStore = create<UserState>()(
   devtools(
@@ -17,14 +12,18 @@ export const useUserStore = create<UserState>()(
       (set) => ({
         user: null,
         isLogin: false,
-        token: getTokenFromLocalStorage(),
+        token: null,
+        error: null,
         setUser: (user) => set({ user, isLogin: true }),
         logout: () => {
-          set({ user: null, isLogin: false, token: null })
+          set({ user: null, isLogin: false, token: null, error: null })
         },
         setToken: (token) => {
           set({ token });
         },
+        setError: (error) => {
+          set({error})
+        }
       }),
       {
         name: 'user-store', // имя для сохранения состояния в localStorage

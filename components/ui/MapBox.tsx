@@ -106,12 +106,12 @@ const MapBox = ({ defaultCity = 'Москва' }: MapBoxProps) => {
   };
 
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-[100px]">
       <div className="relative mb-4">
         <input
           type="text"
           className="border p-2 rounded-md w-full"
-          placeholder="Поиск местоположения"
+          placeholder="Location search"
           value={searchQuery}
           onChange={(e) => {
             setSearchQuery(e.target.value);
@@ -138,14 +138,14 @@ const MapBox = ({ defaultCity = 'Москва' }: MapBoxProps) => {
         onClick={toggleMapVisibility}
         className="mb-4 bg-blue-500 text-white p-2 rounded-md"
       >
-        {isMapVisible ? 'Скрыть карту' : 'Показать карту'}
+        {isMapVisible ? 'Hide map' : 'Show map'}
       </button>
 
       {isMapVisible && position && (
         <MapContainer
           center={position}
           zoom={13}
-          style={{ height: '500px', width: '100%' }}
+          style={{ height: '400px', width: '100%' }}
         >
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

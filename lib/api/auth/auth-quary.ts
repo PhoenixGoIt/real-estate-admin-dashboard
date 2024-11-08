@@ -1,98 +1,98 @@
-"use client"
-import { useMutation, useQuery } from "@tanstack/react-query"
-import { GetUserApi, LoginApi, RegisterApi, setAuthHeader } from "./auth-api"
-import { LoginForm, RegisterForm, AuthResponse, User } from "@/lib/@type"
+"use client";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { GetUserApi, LoginApi, RegisterApi, setAuthHeader } from "./auth-api";
+import { LoginForm, RegisterForm, User, QueryError } from "@/lib/@type";
 import { useUserStore } from "@/lib/store/userStore";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { AxiosResponse } from "axios";
 
-
-
 export const useRegister = () => {
-    const { setToken, setUser, token } = useUserStore();
-    const router = useRouter();
-    const mutation = useMutation({
-        mutationKey: ['register'],
-        mutationFn: (data: RegisterForm) => RegisterApi(data),
-    onSuccess: (response) => {
-        console.log('Registration successful');
-        setToken(response.data.jwt)
-        if (token) {
-            setAuthHeader(token);
-        }
-        setUser(response.data.user)
-        
-      },
-      onError: (error) => {
-        console.error('Registration failed:', error);
-      },
-  }
-  )
-  return mutation
-}
-export const useLogin = () => {
-    const { setToken, setUser, token } = useUserStore();
+  const { setToken, setUser, setError, token } = useUserStore();
 
-    const mutation = useMutation({
-        mutationKey: ['login'],
-        mutationFn: (data: LoginForm) => LoginApi(data),
-
+  const mutation = useMutation({
+    mutationKey: ['register'],
+    mutationFn: (data: RegisterForm) => RegisterApi(data),
     onSuccess: (response) => {
-        console.log('Registration successful');
-        setToken(response.data.jwt)
-        if (token) {
-            setAuthHeader(token);
-        }
-        setUser(response.data.user)
+      console.log('Registration successful');
+      setToken(response.data.jwt);
+      setAuthHeader(token)
+      setError(null)
+      setUser(response.data.user);
     },
-
     onError: (error) => {
+      setError(error)
       console.error('Registration failed:', error);
     },
+  });
+  return mutation;
+};
 
-    })
-return mutation
-}
+export const useLogin = () => {
+  const { setUser, setToken, setError, token } = useUserStore();
+  const mutation = useMutation({
+    mutationKey: ['login'],
+    mutationFn: (data: LoginForm) => LoginApi(data),
+    onSuccess: (response) => {
+      console.log('Login successful');
+      setToken(response.data.jwt);
+      setAuthHeader(token)
+      setError(null)
+      setUser(response.data.user);
+    },
+    onError: (error) => {
+      setError(error)
+      console.error('Login failed:', error);
+    },
+  });
+  return mutation;
+};
 
 export const useGetUser = () => {
-  const { isLogin, token, setUser } = useUserStore();
+  const { isLogin, token, setUser, logout, setToken, setError } = useUserStore();
   const router = useRouter();
-
-  const { data, error, isLoading, refetch } = useQuery<User, Error>({
+  setAuthHeader(token)
+  const {data, error, isLoading, refetch, isSuccess, isError } = useQuery<User, QueryError>({
     queryKey: ['user'],
     queryFn: async () => {
       const response: AxiosResponse<User> = await GetUserApi();
+      console.log('useGetUser successful');
       return response.data;
     },
-    enabled: false,
+    enabled: true, // Запрос включен до вызова refetch
+    retry: false,
   });
 
   useEffect(() => {
-    if (isLogin && token) {
-      setAuthHeader(token);
-      refetch();
-    } else if (isLogin === false) {
+    
+    if (!token) {
+      console.log("no token")
       router.push('/auth');
+      return;
     }
-  }, [isLogin, token, refetch, router]);
 
-  useEffect(() => {
-    if (data) {
-      console.log(data)
+    if(isSuccess) {
+      console.log("isSuccess")
+      setError(null)
       setUser(data);
+      console.log("Success setUser")
+    } else {
+      setError(error)
+      if (error?.status === 401) {
+        logout();  
+        router.push('/auth');
+      }
     }
-  }, [data, setUser]);
+
+    // if(isError) {
+    //   setError(error)
+    //   logout();
+    //   router.push('/auth');
+    //   console.log(`Query Error:  ${error.message}`)
+    // }
+
+    
+  }, [data, token, isLogin, refetch, setUser, logout, setToken, router,isSuccess,isError]);
 
   return { error, isLoading };
-};
-
-export const useLogout = () => {
-  const { logout } = useUserStore();
-  const handleLogout = () => {
-    setAuthHeader('')
-    logout();
-    console.log("Successful logout");
-  };
-  return handleLogout;
 };

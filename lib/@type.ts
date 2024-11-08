@@ -18,7 +18,7 @@ export interface PropertyCardItem {
     amountBed: number,
     title: string, 
     price: number,
-    mainImage: string, 
+    mainImage: string,  
     location: string,
   }
   
@@ -47,9 +47,11 @@ export interface UserState {
   user: User | null;
   isLogin: boolean;
   token: string | null,
+  error: null | {}
   setUser: (user: User) => void;
   logout: () => void;
-  setToken: (token: string) => void;
+  setToken: (token: string | null) => void;
+  setError: (error: {} | null) => void;
 }
 
 export interface RegisterForm {
@@ -62,4 +64,10 @@ export interface RegisterForm {
 export interface LoginForm {
   identifier: string
   password: string
+}
+
+export interface QueryError {
+  response?: { status: number };
+  status?: number
+  message: string;
 }
