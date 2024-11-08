@@ -6,19 +6,19 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel"
+} from "@/components/ui/shadcn/carousel"
 import { PropertyCard } from '../ui/PropertyCard';
 import { GetAllProperty } from '@/lib/api/property/property-quary';
 
 export const PropertyList = () => {
-  const {data, isLoading} = GetAllProperty()
+  // const {data, isLoading} = GetAllProperty()
   
   return (
     <section className='w-full h-[350px] mt-6 rounded-lg bg-white p-5 shadow-md'>
         <div className='flex mb-4'>
             <h2 className='justify-start font-[600] text-xl'>Property List</h2>
         </div>
-        <Carousel className='w-full' opts={{
+        {/* <Carousel className='w-full' opts={{
         align: "start",
       }}>
           <CarouselContent className='-ml-1'>
@@ -35,7 +35,7 @@ export const PropertyList = () => {
           </CarouselContent>
           <CarouselPrevious />
           <CarouselNext />
-        </Carousel>
+        </Carousel> */}
     </section>
   )
 }

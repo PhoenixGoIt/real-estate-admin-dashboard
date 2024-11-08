@@ -1,7 +1,6 @@
 "use client"
 
 import React from 'react'
-import Button from '../ui/Button1'
 import Search from '../ui/Search'
 
 import {
@@ -10,12 +9,13 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/shadcn/select"
 
 import Image from 'next/image'
 import { PropertyCard } from '../ui/PropertyCard'
 import Link from 'next/link'
 import { GetAllProperty } from '@/lib/api/property/property-quary'
+import Button from '../ui/Button2'
 
 
 function Property() {
@@ -26,7 +26,7 @@ function Property() {
         <div className='flex items-center mb-6  '>
        <h1  className='text-black font-[700] text-3xl'>Property</h1>
         <Link href="/property-list/add-property" className='ml-auto'>
-        <Button/>
+        <Button title='Create Property'/>
         </Link>
         </div>
         <div className='bg-white w-full max-h-max rounded-lg p-5 mb-9'>
