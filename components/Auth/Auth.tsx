@@ -1,140 +1,128 @@
-"use client"
-import React, { useState } from 'react';
+"use client";
+import { useState } from 'react';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Input } from '../ui/Input';
 import { useLogin, useRegister } from '@/lib/api/auth/auth-quary';
 import { withGuest } from '@/lib/withGuest';
+import { useUserStore } from '@/lib/store/userStore';
+import Image from 'next/image';
+import Button from '../ui/Button2';
+import * as yup from 'yup';
+
+export const registerSchema = yup.object({
+  name: yup.string().min(2).max(30).required('Name is required'),
+  username: yup.string().min(2).max(30).required('Username is required'),
+  email: yup.string().email('Invalid email format').required('Email is required'),
+  password: yup.string().min(6).required('Password is required'),
+}).required();
+
+export type RegisterForm = yup.InferType<typeof registerSchema>;
+
+const loginSchema = yup.object({
+  identifier: yup.string().required('Email/Username is required'),
+  password: yup.string().min(6).required('Password is required'),
+}).required();
+
+
+export type LoginForm = yup.InferType<typeof loginSchema>;
 
 const Auth = () => {
-  const [name, setName] = useState('');
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [rememberMe, setRememberMe] = useState(false);
-  const [isSignUp, setIsSignUp] = useState(false); // новое состояние для переключения форм
-  
+  const [isSignUp, setIsSignUp] = useState(false);
   const registerMutation = useRegister();
-  const loginMutation = useLogin()
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('name:', name)
-    if (isSignUp) {
-      registerMutation.mutate({ username, email, password, name });
-      console.log("Register submit");
-    } else {
-      const identifier = email
-      loginMutation.mutate({ identifier, password });
-      console.log("Login submit");
+  const loginMutation = useLogin();
+  const { error } = useUserStore();
+  const renderErrorMessage = (error: any) => {
+    switch (error?.response?.data?.error?.message) {
+      case "Email or Username are already taken":
+        return "Email or Username are already taken*";
+      case "Invalid identifier or password":
+        return "Incorrect username or password*";
+      default:
+        return "An error occurred. Please try again*";
     }
+  };
+
+  const RegisterFormComponent = () => {
+    const { register, handleSubmit, formState: { errors } } = useForm<RegisterForm>({
+      resolver: yupResolver(registerSchema),
+    });
+
+    const onSubmit: SubmitHandler<RegisterForm> = (data) => {
+      registerMutation.mutate(data);
+    };
+
+    return (
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div>
+          <label htmlFor="name" className="block text-md font-medium text-gray-700 mb-3">Name</label>
+          <Input title="Enter your name" id="name" type="text" register={register("name")} />
+          {errors.name && <p className="text-red-600 text-sm">{errors.name.message}</p>}
+        </div>
+        <div>
+          <label htmlFor="username" className="block text-md font-medium text-gray-700 mb-3">Username</label>
+          <Input title="Enter your username" id="username" type="text" register={register("username")} />
+          {errors.username && <p className="text-red-600 text-sm">{errors.username.message}</p>}
+        </div>
+        <div>
+          <label htmlFor="email" className="block text-md font-medium text-gray-700 mb-3">Email</label>
+          <Input title="Enter your email" id="email" type="email" register={register("email")} />
+          {errors.email && <p className="text-red-600 text-sm">{errors.email.message}</p>}
+        </div>
+        <div>
+          <label htmlFor="password" className="block text-md font-medium text-gray-700 mb-3">Password</label>
+          <Input title="Enter your password" id="password" type="password" register={register("password")} />
+          {errors.password && <p className="text-red-600 text-sm">{errors.password.message}</p>}
+        </div>
+        <Button title="Sign up" type='submit' width='full' height='40px' />
+      </form>
+    );
+  };
+
+  const LoginFormComponent = () => {
+    const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({
+      resolver: yupResolver(loginSchema),
+    });
+
+    const onSubmit: SubmitHandler<LoginForm> = (data) => {
+      loginMutation.mutate(data);
+    };
+
+    return (
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <div>
+          <label htmlFor="identifier" className="block text-md font-medium text-gray-700 mb-3">Email/Username</label>
+          <Input title="Enter your email" id="identifier" type="text" register={register("identifier")} />
+          {errors.identifier && <p className="text-red-600 text-sm">{errors.identifier.message}</p>}
+        </div>
+        <div>
+          <label htmlFor="password" className="block text-md font-medium text-gray-700 mb-3">Password</label>
+          <Input title="Enter your password" id="password" type="password" register={register("password")} />
+          {errors.password && <p className="text-red-600 text-sm">{errors.password.message}</p>}
+        </div>
+        <Button title="Log in" type='submit' width='full' height='40px' />
+      </form>
+    );
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6">{isSignUp ? "Register" : "Login"}</h2>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {isSignUp && (
-            <div>
-              <label htmlFor="name" className="block text-md font-medium text-gray-700 mb-3">Name</label>
-              <Input
-                title='Enter your name'
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div>
-          )}
-
-          {isSignUp && (
-            <div>
-              <label htmlFor="username" className="block text-md font-medium text-gray-700 mb-3">Username</label>
-              <Input
-                title='Enter your username'
-                id="username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-          )}
-
-          <div>
-            <label htmlFor="email" className="block text-md font-medium text-gray-700 mb-3">Email</label>
-            <Input
-              title='Enter your email'
-              id='email'
-              type='email'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="password" className="block text-md font-medium text-gray-700 mb-3">Password</label>
-            <Input
-              title='Enter your password'
-              id='password'
-              type='password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <input
-                id="rememberMe"
-                name="rememberMe"
-                type="checkbox"
-                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                checked={rememberMe}
-                onChange={() => setRememberMe(!rememberMe)}
-              />
-              <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-900">
-                Remember for 30 days
-              </label>
-            </div>
-
-            {!isSignUp && (
-              <div className="text-sm">
-                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
-                  Forgot Password?
-                </a>
-              </div>
-            )}
-          </div>
-          <div>Error</div>
-          <div>
-            <button
-              type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-            > 
-              {isSignUp ? "Sign up" : "Log in"}
-            </button>
-          </div>
-        </form>
-
-        <div className="mt-6">
-          <button
-            type="button"
-            className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-          >
-            <img
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
-              alt="Google logo"
-              className="h-5 w-5 mr-2"
-            />
-            {isSignUp ? "Sign up with Google" : "Log in with Google"}
-          </button>
+      <div className="bg-white pl-8 pr-8 pb-8 pt-6 rounded-lg shadow-lg w-full max-w-md">
+        <div className="flex justify-center mb-3">
+          <Image src={'/logo.svg'} alt="logo" width={29} height={32} />
+          <h2 className="text-xl ml-2 font-bold">Yagira Admin Dashboard</h2>
         </div>
-
+        <div className="flex items-center mb-4">
+          <span className="border-t border-gray-300 w-full"></span>
+          <h2 className="text-2xl font-bold m-3 text-center">{isSignUp ? "Register" : "Login"}</h2>
+          <span className="border-t border-gray-300 w-full"></span>
+        </div>
+        {isSignUp ? <RegisterFormComponent /> : <LoginFormComponent />}
+        {error && <p className="text-red-500 font-medium mt-4">{renderErrorMessage(error)}</p>}
         <div className="flex justify-center mt-6">
           <p className="text-center text-sm text-gray-600">
             {isSignUp ? "Already have an account?" : "Don't have an account?"}{' '}
-            <span
-              className="ml-1 font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer"
-              onClick={() => setIsSignUp(!isSignUp)} // переключаем состояние
-            >
+            <span className="ml-1 font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer" onClick={() => setIsSignUp(!isSignUp)}>
               {isSignUp ? "Sign in" : "Sign up"}
             </span>
           </p>

@@ -11,7 +11,7 @@ const UserProvider = dynamic(() => import('@/lib/UserProvider'), { ssr: false })
 const inter = Manrope({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Real Estate Admin Dash Board",
+  title: "Yagira Admin Dash Board",
   description: "Real Estate Admin Dash Board",
   icons: '/logo.svg'
 };
