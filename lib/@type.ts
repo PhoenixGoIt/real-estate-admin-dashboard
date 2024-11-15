@@ -47,27 +47,27 @@ export interface UserState {
   user: User | null;
   isLogin: boolean;
   token: string | null,
-  error: null | {}
+  error: null | QueryError
   setUser: (user: User) => void;
   logout: () => void;
   setToken: (token: string | null) => void;
-  setError: (error: {} | null) => void;
+  setError: (error: null | QueryError) => void;
 }
 
-export interface RegisterForm {
-  name: string
-  username: string
-  email: string 
-  password: string
-}
+// export interface LoginForm {
+//   identifier: string;
+//   password: string;
+//   name?: string;
+//   username?: string;
+// }
 
-export interface LoginForm {
-  identifier: string
-  password: string
-}
-
+// export interface RegisterForm {
+//   name: string;
+//   username: string;
+//   email: string;
+//   password: string;
+// }
 export interface QueryError {
-  response?: { status: number };
   status?: number
-  message: string;
+  message?: string;
 }

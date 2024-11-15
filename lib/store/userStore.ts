@@ -3,7 +3,6 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { UserState } from '../@type';
-import { setAuthHeader } from '../api/auth/auth-api';
 
 
 export const useUserStore = create<UserState>()(

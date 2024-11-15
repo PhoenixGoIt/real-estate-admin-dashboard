@@ -5,7 +5,6 @@ axios.defaults.baseURL = process.env.NEXT_PUBLIC_HOST_API;
 
 
 export const setAuthHeader = (token: string | null) => {
-  console.log(`Token: ${token}`);
   if (!token) {
     axios.defaults.headers.common.Authorization = null;
   } else {
@@ -19,16 +18,13 @@ export const clearAuthHeader = () => {
 };
 
 export async function RegisterApi(data: RegisterForm) {
-  console.log(`@RegisterApi, Token: ${axios.defaults.headers.common.Authorization}`);
   return await axios.post(`${process.env.NEXT_PUBLIC_REGISTER_API}`, data);
 }
 
 export async function LoginApi(data: LoginForm) {
-  console.log(`@LoginApi, Token: ${axios.defaults.headers.common.Authorization}`);
   return await axios.post(`${process.env.NEXT_PUBLIC_LOGIN_API}`, data);
 }
 
 export async function GetUserApi(): Promise<AxiosResponse<User>> {
-  console.log(`@GetUserApi, Token: ${axios.defaults.headers.common.Authorization}`);
   return await axios.get(`${process.env.NEXT_PUBLIC_GETUSER_API}`);
 }

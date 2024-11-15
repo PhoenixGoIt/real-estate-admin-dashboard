@@ -14,7 +14,6 @@ export const useRegister = () => {
     mutationKey: ['register'],
     mutationFn: (data: RegisterForm) => RegisterApi(data),
     onSuccess: (response) => {
-      console.log('Registration successful');
       setToken(response.data.jwt);
       setAuthHeader(token)
       setError(null)
@@ -22,7 +21,6 @@ export const useRegister = () => {
     },
     onError: (error) => {
       setError(error)
-      console.error('Registration failed:', error);
     },
   });
   return mutation;
@@ -34,7 +32,6 @@ export const useLogin = () => {
     mutationKey: ['login'],
     mutationFn: (data: LoginForm) => LoginApi(data),
     onSuccess: (response) => {
-      console.log('Login successful');
       setToken(response.data.jwt);
       setAuthHeader(token)
       setError(null)
@@ -42,7 +39,6 @@ export const useLogin = () => {
     },
     onError: (error) => {
       setError(error)
-      console.error('Login failed:', error);
     },
   });
   return mutation;
@@ -56,7 +52,6 @@ export const useGetUser = () => {
     queryKey: ['user'],
     queryFn: async () => {
       const response: AxiosResponse<User> = await GetUserApi();
-      console.log('useGetUser successful');
       return response.data;
     },
     enabled: true, // Запрос включен до вызова refetch
@@ -66,16 +61,13 @@ export const useGetUser = () => {
   useEffect(() => {
     
     if (!token) {
-      console.log("no token")
       router.push('/auth');
       return;
     }
 
     if(isSuccess) {
-      console.log("isSuccess")
       setError(null)
       setUser(data);
-      console.log("Success setUser")
     } else {
       setError(error)
       if (error?.status === 401) {
