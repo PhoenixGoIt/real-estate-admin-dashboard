@@ -59,7 +59,6 @@ export const useGetUser = () => {
   });
 
   useEffect(() => {
-    
     if (!token) {
       router.push('/auth');
       return;
@@ -73,6 +72,9 @@ export const useGetUser = () => {
       if (error?.status === 401) {
         logout();  
         router.push('/auth');
+      } else if (error?.code === "ERR_NETWORK") {
+        logout();  
+        router.push('/auth');
       }
     }
 
@@ -84,7 +86,7 @@ export const useGetUser = () => {
     // }
 
     
-  }, [data, token, isLogin, refetch, setUser, logout, setToken, router,isSuccess,isError]);
+  }, [data, token, isLogin, refetch, setUser, logout, setToken, router,isSuccess,isError, error]);
 
   return { error, isLoading };
 };

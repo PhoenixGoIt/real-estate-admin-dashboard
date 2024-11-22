@@ -54,20 +54,21 @@ export interface UserState {
   setError: (error: null | QueryError) => void;
 }
 
-// export interface LoginForm {
-//   identifier: string;
-//   password: string;
-//   name?: string;
-//   username?: string;
-// }
+export interface LoginForm {
+  identifier: string;
+  password: string;
+  name?: string;
+  username?: string;
+}
 
-// export interface RegisterForm {
-//   name: string;
-//   username: string;
-//   email: string;
-//   password: string;
-// }
+export interface RegisterForm {
+  name: string;
+  username: string;
+  email: string;
+  password: string;
+}
 export interface QueryError {
   status?: number
   message?: string;
+  code?: string
 }

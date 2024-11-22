@@ -24,10 +24,10 @@ const loginSchema = yup.object({
   password: yup.string().min(6).required('Password is required'),
 }).required();
 
-
 export type LoginForm = yup.InferType<typeof loginSchema>;
 
 const Auth = () => {
+  const { setError } = useUserStore();
   const [isSignUp, setIsSignUp] = useState(false);
   const registerMutation = useRegister();
   const loginMutation = useLogin();
@@ -43,6 +43,11 @@ const Auth = () => {
     }
   };
 
+  const pageChanger = () => {
+    setIsSignUp(!isSignUp)
+    setError(null)
+  }
+
   const RegisterFormComponent = () => {
     const { register, handleSubmit, formState: { errors } } = useForm<RegisterForm>({
       resolver: yupResolver(registerSchema),
@@ -51,6 +56,7 @@ const Auth = () => {
     const onSubmit: SubmitHandler<RegisterForm> = (data) => {
       registerMutation.mutate(data);
     };
+    
 
     return (
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -122,7 +128,7 @@ const Auth = () => {
         <div className="flex justify-center mt-6">
           <p className="text-center text-sm text-gray-600">
             {isSignUp ? "Already have an account?" : "Don't have an account?"}{' '}
-            <span className="ml-1 font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer" onClick={() => setIsSignUp(!isSignUp)}>
+            <span className="ml-1 font-medium text-indigo-600 hover:text-indigo-500 cursor-pointer" onClick={() => pageChanger()}>
               {isSignUp ? "Sign in" : "Sign up"}
             </span>
           </p>
