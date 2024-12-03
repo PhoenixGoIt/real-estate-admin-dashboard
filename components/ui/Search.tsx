@@ -1,13 +1,15 @@
 "use client"
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import React, { useState, ChangeEvent } from 'react'
 
 interface SearchItem {
-    title: string,
-    className: string
+    title: string;
+    className: string;
+    onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
-const Search: React.FC<SearchItem> = ({title, className}) => {
+
+const Search: React.FC<SearchItem> = ({title, className, onChange}) => {
     const [isSearchOpen, setIsSearchOpen] = useState(false);  
       return (
         <div className={`w-full relative flex-grow ${isSearchOpen ? 'block' : 'hidden'} lg:block`}>
@@ -23,6 +25,7 @@ const Search: React.FC<SearchItem> = ({title, className}) => {
           <input
             type="text"
             placeholder={`${title}`}
+            onChange={onChange}
             className={cn(
                 className !== 'default' && className,
                 className === 'default' && 'pl-10 pr-4 py-2 rounded-lg outline-none bg-gray-100 transition-all hover:ring-2 hover:ring-blue-500'
