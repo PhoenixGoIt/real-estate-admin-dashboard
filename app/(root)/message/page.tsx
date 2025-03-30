@@ -4,8 +4,11 @@ import React from 'react'
 const page = () => {
   return (
     <section className='w-full h-full'>
-      <h1 className='text-black font-[700] text-3xl mb-4'>Message</h1>
-      <Message />
+      <div className="fixed inset-0 bg-gray-900">
+      <div className="fixed inset-0 bg-transparent animate-reveal">
+        <Message />
+      </div>
+      </div>
     </section>
   )
 }

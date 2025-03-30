@@ -2,7 +2,9 @@ import React from 'react'
 
 const loading = () => {
   return (
-    <div>loading</div>
+    <div className="fixed inset-0 bg-gray-900">
+      
+    </div>
   )
 }
 

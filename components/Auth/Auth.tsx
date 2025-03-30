@@ -17,7 +17,7 @@ export const registerSchema = yup.object({
   password: yup.string().min(6).required('Password is required'),
 }).required();
 
-export type RegisterForm = yup.InferType<typeof registerSchema>;
+export type RegisterForm = yup.InferType<typeof registerSchema>;  
 
 const loginSchema = yup.object({
   identifier: yup.string().required('Email/Username is required'),

@@ -2,6 +2,8 @@
 import { useState } from 'react'
 import Search from '../ui/Search'
 import { IoSend } from "react-icons/io5";
+import Image from 'next/image';
+import Link from 'next/link';
 
 // Interfaces for type safety
 interface IUser {
@@ -31,7 +33,7 @@ interface IChat {
 const mockCurrentUser: IUser = {
     id: "current-user",
     name: "You",
-    avatar: "/avatar3.jpg",
+    avatar: "/Ava/UserAva.jpg",
     isOnline: true
 };
 
@@ -39,20 +41,20 @@ const mockUsers: IUser[] = [
     {
         id: "user1",
         name: "John Anderson",
-        avatar: "/avatar1.jpg",
+        avatar: "/Ava/User1Ava.jpg",
         isOnline: true
     },
     {
         id: "user2",
         name: "Sarah Wilson",
-        avatar: "/avatar2.jpg",
+        avatar: "/Ava/User2Ava.jpg",
         isOnline: false,
         lastSeen: "2024-01-20T15:31:00"
     },
     {
         id: "user3",
         name: "Michael Brown",
-        avatar: "/avatar4.jpg",
+        avatar: "/Ava/User3Ava.jpg",
         isOnline: true
     }
 ];
@@ -120,13 +122,13 @@ const Message = () => {
     const [messages, setMessages] = useState<IMessage[]>(mockMessages);
     const [selectedChat, setSelectedChat] = useState<IChat | null>(null);
     const [newMessage, setNewMessage] = useState("");
-    const [searchQuery, setSearchQuery] = useState("");
+    // const [searchQuery, setSearchQuery] = useState("");
 
     // Handler functions
-    const handleSearch = (query: string) => {
-        setSearchQuery(query);
-        // Implement search logic when API is ready
-    };
+    // const handleSearch = (query: string) => {
+    //     setSearchQuery(query);
+    //     // Implement search logic when API is ready
+    // };
 
     const handleChatSelect = (chat: IChat) => {
         setSelectedChat(chat);
@@ -163,14 +165,14 @@ const Message = () => {
     };
 
     return (
-        <div className='bg-white w-full h-[93%] rounded-lg mb-6 pr-6 pl-6 flex'>
+        <div className='bg-white w-full h-full rounded-lg mb-6 pr-6 pl-6 flex'>
             {/* Chat List Section */}
             <div className='p-3 h-full mb-3 w-[29%] border-r border-gray-300'>
                 <div className='mb-3'>
                     <Search 
                         title='Search' 
                         className='w-full pl-10 pr-4 py-2 rounded-lg outline-none bg-gray-100 transition-all hover:ring-2 hover:ring-blue-500'
-                        onChange={(e) => handleSearch(e.target.value)}
+                        // onChange={(e) => handleSearch(e.target.value)}
                     />
                 </div>
                 <div className='overflow-y-auto h-[calc(100%-60px)]'>
@@ -189,7 +191,7 @@ const Message = () => {
                                     <img 
                                         src={otherParticipant?.avatar} 
                                         alt={otherParticipant?.name} 
-                                        className='w-full h-full rounded-full object-cover' 
+                                        className='w-[full] h-full rounded-full object-cover' 
                                     />
                                 </div>
                                 <div className='ml-3'>
@@ -214,7 +216,7 @@ const Message = () => {
                 {selectedChat ? (
                     <>
                         {/* Chat Header */}
-                        <div className='flex items-center pb-4 border-b border-gray-200'>
+                        <div className='flex items-center pb-2 border-b border-gray-200'>
                             <div className='bg-gray-200 w-[45px] h-[45px] rounded-full flex items-center justify-center'>
                                 <img 
                                     src={selectedChat.participants[0].avatar} 
@@ -224,14 +226,20 @@ const Message = () => {
                             </div>
                             <div className='ml-3'>
                                 <div className='text-lg font-medium'>{selectedChat.participants[0].name}</div>
-                                <div className='text-sm text-gray-500'>
+                                <div className={`text-md ${selectedChat.participants[0].isOnline ? 'text-green' : 'text-gray-500'} `}>
                                     {selectedChat.participants[0].isOnline ? 'Online' : 'Offline'}
                                 </div>
                             </div>
+                            <div className='ml-auto '>
+                                <Link href={'/'}>
+                                    <Image src={'/logo.svg'} alt='logo' width={40} height={43} className='hidden lg:flex' />
+                                </Link>
+                            </div>
                         </div>
+                        
 
                         {/* Messages Area */}
-                        <div className='flex-1 overflow-y-auto py-4 space-y-4'>
+                        <div className='flex-1 overflow-y-auto py-4 space-y-4 animate-message'>
                             {messages.map((message) => {
                                 const isCurrentUser = message.senderId === mockCurrentUser.id;
                                 return (
@@ -239,23 +247,23 @@ const Message = () => {
                                         className={`flex items-start gap-2.5 ${isCurrentUser ? 'flex-row-reverse' : ''}`}
                                     >
                                         <img 
-                                            className='w-8 h-8 rounded-full' 
+                                            className='w-12 h-12 rounded-full' 
                                             src={isCurrentUser ? mockCurrentUser.avatar : selectedChat.participants[0].avatar} 
                                             alt='user' 
                                         />
-                                        <div className='flex flex-col gap-1'>
+                                        <div className='flex flex-col gap-1 '>
                                             <div className={`flex items-center space-x-2 ${isCurrentUser ? 'flex-row-reverse' : ''}`}>
-                                                <span className='text-sm font-semibold'>
+                                                <span className='ml-2 text-sm font-semibold'>
                                                     {isCurrentUser ? 'You' : selectedChat.participants[0].name}
                                                 </span>
                                                 <span className='text-sm text-gray-500'>
                                                     {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                                 </span>
                                             </div>
-                                            <div className={`flex flex-col leading-1.5 p-4 ${
+                                            <div className={`flex flex-col leading-1.5 p-3 ${
                                                 isCurrentUser 
-                                                    ? 'bg-primary_color text-white rounded-s-xl rounded-ee-xl' 
-                                                    : 'bg-gray-100 rounded-e-xl rounded-es-xl'
+                                                    ? 'bg-primary_color text-white rounded-md' 
+                                                    : 'bg-gray-100 rounded-md'
                                             }`}>
                                                 <p className='text-sm'>{message.content}</p>
                                             </div>
@@ -272,7 +280,7 @@ const Message = () => {
                                     type='text'
                                     value={newMessage}
                                     onChange={(e) => setNewMessage(e.target.value)}
-                                    onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                                    onKeyUp={(e) => e.key === 'Enter' && handleSendMessage()}
                                     placeholder='Type a message...'
                                     className='flex-1 p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary_color'
                                 />
