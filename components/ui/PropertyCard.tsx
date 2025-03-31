@@ -10,7 +10,6 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({data, opt}) => {
   const {bedRooms, bedType, description, guestPolicy, maxGuests, roomType, rooms, square, type } = data?.info
   
   const fullImageUrl = `${process.env.NEXT_PUBLIC_HOST_API}${prevImage.url}`;
-  console.log(data.info)
   if (opt === "horizontal") {
     return (
       <>

@@ -12,8 +12,6 @@ import { GetPropertyList  } from '@/lib/api/property/property-quary';
 
 export const PropertyList = () => {
   const {data, isLoading, error} = GetPropertyList()
-  console.log(data)
-
   
   return (
         <section className='inline-block w-full  mt-6 rounded-lg bg-white p-5 shadow-md'>
