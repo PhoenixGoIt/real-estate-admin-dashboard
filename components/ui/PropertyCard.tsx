@@ -6,22 +6,27 @@ import React from 'react'
 
 export const PropertyCard: React.FC<PropertyCardProps> = ({data, opt}) => {
   const router = useRouter()
-  const {id, mainImage, title, price, location, square, amountBed} = data
+  const {id, prevImage, title, price, location, } = data
+  const {bedRooms, bedType, description, guestPolicy, maxGuests, roomType, rooms, square, type } = data?.info
+  
+  const fullImageUrl = `${process.env.NEXT_PUBLIC_HOST_API}${prevImage.url}`;
+  console.log(data.info)
   if (opt === "horizontal") {
     return (
       <>
       <div className='flex w-auto h-auto items-center transition-all hover:scale-105' onClick={() => {router.push(`/property-list/${id}`)}}>
           <Image 
-            src={mainImage}
+            src={fullImageUrl}
             alt={`${title} image`} 
             width={300} 
             height={180} 
             className=" h-[180px] rounded-lg object-cover"
           />
         <div className='ml-4 '>
-          <div className='rounded-lg bg-secondary_color font-[600] mr-auto w-[55px] h-[35px] flex mb-3'>
-            <span className='text-primary_color m-auto'>${price}</span>
-          </div>
+            <div className="p-3 inline-flex items-center justify-center rounded-lg bg-secondary_color font-[600] mr-auto w-auto h-[35px] mb-3">
+              <span className="text-primary_color">{`$${price}`}</span>
+            </div>
+
             <div className='mb-3'>
               <p className='font-[600] text-lg'>{title}</p>
             </div>
@@ -36,11 +41,11 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({data, opt}) => {
             <div className='flex items-center gap-9'>
                 <div className='flex gap-2'>
                 <Image src='/bed.svg' alt='bed' width={17} height={17}/>
-                <p>{amountBed} Beds</p>
+                <p>{bedRooms} Beds</p>
                 </div>
                 <div className='flex gap-2'>
                 <Image src='/cross.svg' alt='cross' width={17} height={17}/>
-                <p>{square}M</p>
+                <p>{square} M</p>
                 </div>
             </div>
         </div>
@@ -49,9 +54,9 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({data, opt}) => {
     )
   }
   return (
-    <div className='w-[330px] mr-8 mb-8'>
+    <div className='w-[330px]'>
       <Image 
-        src={mainImage}
+        src={fullImageUrl}
         alt={`${title} image`} 
         width={330} 
         height={190} 
@@ -59,8 +64,8 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({data, opt}) => {
       />
       <div className="flex items-center mt-2">
         <span className='text-lg font-[600] mb-1'>{title}</span>
-        <div className='rounded-lg bg-secondary_color font-[600] ml-auto w-[55px] h-[35px] flex'>
-          <span className='text-primary_color m-auto'>${price}</span>
+        <div className="ml-auto p-3 inline-flex items-center justify-center rounded-lg bg-secondary_color font-[600] w-auto h-[35px] mb-3">
+          <span className="text-primary_color">{`$${price}`}</span>
         </div>
       </div>
       <div className="flex items-center">
