@@ -14,12 +14,12 @@ import {
 import Image from 'next/image'
 import { PropertyCard } from '../ui/PropertyCard'
 import Link from 'next/link'
-import { GetAllProperty } from '@/lib/api/property/property-quary'
+import { GetPropertyList } from '@/lib/api/property/property-quary'
 import Button from '../ui/Button2'
 
 
 function Property() {
-  const {data, isLoading} = GetAllProperty()
+  const {data, isLoading} = GetPropertyList()
   return (
     <>
     <div className='w-full h-full'>
@@ -99,11 +99,11 @@ function Property() {
           <div className='w-full h-full grid gap-6 grid-cols-2 mt-6'>
             {isLoading 
               ? "Loading..."
-              :data?.length
-              ? data.map((item: any, index: any) => (
+              :data?.data.length
+              ? data?.data.map((item: any, index: any) => (
                 <PropertyCard key={index} data={item} opt={"horizontal"}/>
                 ))
-              : "Data Error"
+              : <span className='ml-auto mr-auto text-xl'>Data Error</span>
               }
           </div>
         </div>

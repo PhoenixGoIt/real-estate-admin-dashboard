@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import Info from './Info'
-import { PropertyList } from './PropertyFrame'
+import { PropertyList } from './PropertyList'
 import { TotalRevenue } from './TotalRevenue'
 import PropertyReferrals from './PropertyReferrals'
 

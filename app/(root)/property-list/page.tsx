@@ -1,4 +1,4 @@
-import Property from '@/components/Property/PropertyList'
+import Property from '@/components/Property/Property'
 import React from 'react'
 
 const page = () => {

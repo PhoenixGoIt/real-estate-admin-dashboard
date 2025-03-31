@@ -18,7 +18,21 @@ export interface PropertyCardItem {
     amountBed: number,
     title: string, 
     price: number,
-    mainImage: string,  
+    prevImage: { url: string };
+    facility: { 
+
+    }
+    info: {
+      bedRooms: number,
+      bedType: string,
+      description: string,
+      guestPolicy: string,
+      maxGuests: number,
+      roomType: string,
+      rooms: number,
+      square: number,
+      type: string
+    }
     location: string,
   }
   
