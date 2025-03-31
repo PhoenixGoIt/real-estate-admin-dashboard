@@ -1,5 +1,5 @@
 "use client"
-import { GetProperty } from '@/lib/api/property/property-quary'
+// import {  } from '@/lib/api/property/property-quary'
 import { property_list } from '@/lib/link';
 import Image from 'next/image'
 import Link from 'next/link';
@@ -12,13 +12,13 @@ const PropertyDetails = () => {
     console.log(isModalOpen)
     const { id } = useParams<{ id: string }>();
     const numericId = parseInt(id, 10);
-    const { mutate, data, isPending } = GetProperty()
-    useEffect(() => {
-        mutate(numericId)
-    }, [])
+    // const { mutate, data, isPending } = GetProperty()
+    // useEffect(() => {
+    //     mutate(numericId)
+    // }, [])
     return (
         <div className='bg-white w-full max-h-max rounded-lg p-5'>
-            <Link href={property_list} className='flex items-center justify-start mb-6'>
+            {/* <Link href={property_list} className='flex items-center justify-start mb-6'>
                 <Image src={"/forward.svg"} alt="forward" width={15} height={15} className='w-auto h-auto' />
                 <h1 className='text-2xl ml-6 '>Details</h1>
             </Link>
@@ -50,7 +50,7 @@ const PropertyDetails = () => {
                 </div>
 
                 </div>
-            </div>
+            </div> */}
         </div>
   )
 }

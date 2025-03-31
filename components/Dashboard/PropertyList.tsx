@@ -1,22 +1,41 @@
-import React from 'react'
-import { PropertyFrame } from '../ui/PropertyFrame'
+"use client"
+import React, { useEffect } from 'react'
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/shadcn/carousel"
+import { PropertyCard } from '../ui/PropertyCard';
+import { GetPropertyList  } from '@/lib/api/property/property-quary';
 
 export const PropertyList = () => {
-  const data = [
-    { name: 'Star Sun Hotel & Apartment', price: 500, image: 'test.webp', location: 'North Carolina, USA'},
-    { name: 'Letdo Ji Hotel & Apartment', price: 532, image: 'test.webp', location: 'New Yrk City, USA'},
-    { name: 'Metro Jayakar Apartment', price: 300, image: 'test.webp', location: 'North Carolina, USA'},
-    { name: 'Star Sun Hotel & Apartment', price: 600, image: 'test.webp', location: 'North Ablion, USA'},
-    { name: 'Almander Hotel & Apartment ', price: 343, image: 'test.webp', location: 'Word Carolina, FCE'},
-    { name: 'Monter Hotel & Apartment ', price: 8345, image: 'test.webp', location: 'Word Carolina, FCE'},
-  ];
+  const {data, isLoading, error} = GetPropertyList()
   
   return (
-    <section className='w-full h-[350px] mt-6 rounded-lg bg-white p-5 shadow-md'>
+        <section className='inline-block w-full  mt-6 rounded-lg bg-white p-5 shadow-md'>
         <div className='flex mb-4'>
             <h2 className='justify-start font-[600] text-xl'>Property List</h2>
         </div>
-        <PropertyFrame data={data} />
+        <Carousel className='w-full' opts={{
+        align: "start",
+      }}>
+          <CarouselContent className='-ml-1'>
+          {isLoading 
+              ? "Loading..."
+              :data?.data.length
+              ? data?.data.map((item: any, index: any) => (
+              <CarouselItem key={index} className='pl-2 lg:basis-[26%]'>
+                <PropertyCard  data={item}/>
+              </CarouselItem>
+                ))
+              : <span className='ml-auto mr-auto text-xl'>Data Error</span>
+              }
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+        </Carousel>
     </section>
   )
 }
