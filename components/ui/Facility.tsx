@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const initialFacility = {
   bath: false,
@@ -21,13 +21,15 @@ const Facility = () => {
   };
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className='flex flex-wrap gap-2'>
       {Object.entries(facility).map(([key, isActive]) => (
         <div
           key={key}
           onClick={() => handleToggle(key as keyof typeof facility)}
           className={`cursor-pointer p-1 w-auto h-auto flex items-center justify-center rounded-md transition-colors select-none ${
-            isActive ? 'ring-1 ring-gray-300 text-black' : 'bg-primary_color text-white'
+            isActive
+              ? "ring-1 ring-gray-300 text-black"
+              : "bg-primary_color text-white"
           }`}
         >
           {key}

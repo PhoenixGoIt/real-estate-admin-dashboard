@@ -30,19 +30,22 @@ const chartConfig = {
 
 export function RevenueChart() {
   return (
-    <div className="">
-      <div className="flex justify-between items-center mb-4">
+    <div className=''>
+      <div className='flex justify-between items-center mb-4'>
         <div>
-          <h2 className="text-xl font-semibold text-gray-800">Total Revenue</h2>
-          <p className="text-sm text-gray-500">Than last month</p>
+          <h2 className='text-xl font-semibold text-gray-800'>Total Revenue</h2>
+          <p className='text-sm text-gray-500'>Than last month</p>
         </div>
-        <button className="text-gray-400 hover:text-gray-600">•••</button>
+        <button className='text-gray-400 hover:text-gray-600'>•••</button>
       </div>
-      <ChartContainer config={chartConfig} className="min-h-[200px] max-h-[420px] w-full">
+      <ChartContainer
+        config={chartConfig}
+        className='min-h-[200px] max-h-[420px] w-full'
+      >
         <BarChart accessibilityLayer data={chartData}>
           <CartesianGrid vertical={false} />
           <XAxis
-            dataKey="month"
+            dataKey='month'
             tickLine={false}
             tickMargin={10}
             axisLine={false}
@@ -50,8 +53,8 @@ export function RevenueChart() {
           />
           <ChartTooltip content={<ChartTooltipContent />} />
           <ChartLegend content={<ChartLegendContent />} />
-          <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-          <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
+          <Bar dataKey='desktop' fill='var(--color-desktop)' radius={4} />
+          <Bar dataKey='mobile' fill='var(--color-mobile)' radius={4} />
         </BarChart>
       </ChartContainer>
     </div>

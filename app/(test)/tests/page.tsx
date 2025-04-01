@@ -1,10 +1,7 @@
 "use client";
 
 function Tests() {
-  return (
-    <>
-    </>
-  );
+  return <></>;
 }
 
 export default Tests;

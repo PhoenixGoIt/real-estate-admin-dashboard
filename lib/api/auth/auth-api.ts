@@ -3,18 +3,16 @@ import axios, { AxiosResponse } from "axios";
 
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_HOST_API;
 
-
 export const setAuthHeader = (token: string | null) => {
   if (!token) {
     axios.defaults.headers.common.Authorization = null;
   } else {
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
   }
-  
 };
 
 export const clearAuthHeader = () => {
-  axios.defaults.headers.common.Authorization = '';
+  axios.defaults.headers.common.Authorization = "";
 };
 
 export async function RegisterApi(data: RegisterForm) {
@@ -26,5 +24,5 @@ export async function LoginApi(data: LoginForm) {
 }
 
 export async function GetUserApi(): Promise<AxiosResponse<User>> {
-  return await axios.get(`${process.env.NEXT_PUBLIC_GETUSER_API}`);
+  return await axios.get(`${process.env.NEXT_PUBLIC_GETUSER_API}?populate=*`);
 }

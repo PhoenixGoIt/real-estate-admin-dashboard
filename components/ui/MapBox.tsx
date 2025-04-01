@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, useMap, Popup } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
+import { useEffect, useState } from "react";
+import { MapContainer, TileLayer, Marker, useMap, Popup } from "react-leaflet";
+import "leaflet/dist/leaflet.css";
+import L from "leaflet";
 
 interface Position {
   lat: number;
@@ -19,16 +19,17 @@ interface MapBoxProps {
 }
 
 const defaultIcon = L.icon({
-  iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+  iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
   iconSize: [25, 41],
   iconAnchor: [12, 41],
 });
 
-const MapBox = ({ defaultCity = 'Москва' }: MapBoxProps) => {
+const MapBox = ({ defaultCity = "Москва" }: MapBoxProps) => {
   const [position, setPosition] = useState<Position | null>(null);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState<NominatimResult[]>([]);
-  const [searchResultPosition, setSearchResultPosition] = useState<Position | null>(null);
+  const [searchResultPosition, setSearchResultPosition] =
+    useState<Position | null>(null);
   const [isMapVisible, setIsMapVisible] = useState(false);
   const [userCity, setUserCity] = useState<string | null>(null);
 
@@ -36,15 +37,15 @@ const MapBox = ({ defaultCity = 'Москва' }: MapBoxProps) => {
   const fetchCityFromCoords = async (latitude: number, longitude: number) => {
     try {
       const response = await fetch(
-        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`
+        `https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`,
       );
       if (!response.ok) {
-        throw new Error('Ошибка при получении города');
+        throw new Error("Ошибка при получении города");
       }
       const data = await response.json();
       return data.address.city || data.address.town || data.address.village;
     } catch (error) {
-      console.error('Ошибка при обратном геокодировании:', error);
+      console.error("Ошибка при обратном геокодировании:", error);
       return null;
     }
   };
@@ -62,36 +63,40 @@ const MapBox = ({ defaultCity = 'Москва' }: MapBoxProps) => {
           }
         },
         () => {
-          console.error('Не удалось получить местоположение пользователя');
-        }
+          console.error("Не удалось получить местоположение пользователя");
+        },
       );
     }
   }, []);
 
   // Поиск местоположения по запросу только в рамках текущего города
   const handleSearch = async (query: string) => {
-    if (query.trim() === '' || !userCity) return;
+    if (query.trim() === "" || !userCity) return;
 
     try {
       const response = await fetch(
         `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
-          query
-        )},${encodeURIComponent(userCity)}&format=json&limit=5`
+          query,
+        )},${encodeURIComponent(userCity)}&format=json&limit=5`,
       );
 
       if (!response.ok) {
-        throw new Error('Ошибка при запросе поиска');
+        throw new Error("Ошибка при запросе поиска");
       }
 
       const results: NominatimResult[] = await response.json();
       setSearchResults(results);
     } catch (error) {
-      console.error('Ошибка при поиске местоположения:', error);
+      console.error("Ошибка при поиске местоположения:", error);
     }
   };
 
   // Когда пользователь выбирает место из списка
-  const handleSelectLocation = (lat: string, lon: string, displayName: string) => {
+  const handleSelectLocation = (
+    lat: string,
+    lon: string,
+    displayName: string,
+  ) => {
     const selectedPosition = { lat: parseFloat(lat), lng: parseFloat(lon) };
     setSearchResultPosition(selectedPosition);
     setPosition(selectedPosition);
@@ -106,12 +111,12 @@ const MapBox = ({ defaultCity = 'Москва' }: MapBoxProps) => {
   };
 
   return (
-    <div className="w-full h-[100px]">
-      <div className="relative mb-4">
+    <div className='w-full h-[100px]'>
+      <div className='relative mb-4'>
         <input
-          type="text"
-          className="border p-2 rounded-md w-full"
-          placeholder="Location search"
+          type='text'
+          className='border p-2 rounded-md w-full'
+          placeholder='Location search'
           value={searchQuery}
           onChange={(e) => {
             setSearchQuery(e.target.value);
@@ -120,12 +125,18 @@ const MapBox = ({ defaultCity = 'Москва' }: MapBoxProps) => {
         />
 
         {searchResults.length > 0 && (
-          <ul className="absolute z-10 bg-white border rounded-md shadow-md w-full mt-1 max-h-60 overflow-auto">
+          <ul className='absolute z-10 bg-white border rounded-md shadow-md w-full mt-1 max-h-60 overflow-auto'>
             {searchResults.map((result) => (
               <li
                 key={result.lat + result.lon}
-                className="p-2 hover:bg-gray-200 cursor-pointer"
-                onClick={() => handleSelectLocation(result.lat, result.lon, result.display_name)}
+                className='p-2 hover:bg-gray-200 cursor-pointer'
+                onClick={() =>
+                  handleSelectLocation(
+                    result.lat,
+                    result.lon,
+                    result.display_name,
+                  )
+                }
               >
                 {result.display_name}
               </li>
@@ -136,19 +147,19 @@ const MapBox = ({ defaultCity = 'Москва' }: MapBoxProps) => {
 
       <button
         onClick={toggleMapVisibility}
-        className="mb-4 bg-blue-500 text-white p-2 rounded-md"
+        className='mb-4 bg-blue-500 text-white p-2 rounded-md'
       >
-        {isMapVisible ? 'Hide map' : 'Show map'}
+        {isMapVisible ? "Hide map" : "Show map"}
       </button>
 
       {isMapVisible && position && (
         <MapContainer
           center={position}
           zoom={13}
-          style={{ height: '400px', width: '100%' }}
+          style={{ height: "400px", width: "100%" }}
         >
           <TileLayer
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
           <Marker position={position} icon={defaultIcon}>
@@ -169,11 +180,15 @@ const MapBox = ({ defaultCity = 'Москва' }: MapBoxProps) => {
 };
 
 // Компонент для установки маркера при клике на карте
-function ClickMarker({ setPosition }: { setPosition: (pos: Position) => void }) {
+function ClickMarker({
+  setPosition,
+}: {
+  setPosition: (pos: Position) => void;
+}) {
   const map = useMap();
 
   useEffect(() => {
-    map.on('click', (e: any) => {
+    map.on("click", (e: any) => {
       const { lat, lng } = e.latlng;
       setPosition({ lat, lng });
     });

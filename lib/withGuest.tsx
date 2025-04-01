@@ -1,15 +1,17 @@
-import { useRouter } from 'next/navigation';
-import { useUserStore } from '@/lib/store/userStore';
-import { useEffect } from 'react';
+import { useRouter } from "next/navigation";
+import { useUserStore } from "@/lib/store/userStore";
+import { useEffect } from "react";
 
-export function withGuest<T extends JSX.IntrinsicAttributes>(WrappedComponent: React.ComponentType<T>) {
+export function withGuest<T extends JSX.IntrinsicAttributes>(
+  WrappedComponent: React.ComponentType<T>,
+) {
   return function WithGuest(props: T) {
     const { isLogin } = useUserStore();
     const router = useRouter();
 
     useEffect(() => {
       if (isLogin) {
-        router.push('/');
+        router.push("/");
       }
     }, [isLogin, router]);
 

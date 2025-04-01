@@ -1,67 +1,71 @@
 export interface propertyListItem {
-    id: number,
-    square: number,
-    amountBed: number,
-    title: string, 
-    price: number,
-    mainImage: string, 
-    location: string,
-    views: number,
-    images: string[],
-    description: string,
-    facillity: { [key: string]: boolean }
+  id: number;
+  square: number;
+  amountBed: number;
+  title: string;
+  price: number;
+  mainImage: string;
+  location: string;
+  views: number;
+  images: string[];
+  description: string;
+  facillity: { [key: string]: boolean };
 }
 
 export interface PropertyCardItem {
-    id: number,
-    square: number,
-    amountBed: number,
-    title: string, 
-    price: number,
-    prevImage: { url: string };
-    facility: { 
+  id: number;
+  square: number;
+  amountBed: number;
+  title: string;
+  price: number;
+  prevImage: { url: string };
+  facility: {};
+  info: {
+    bedRooms: number;
+    bedType: string;
+    description: string;
+    guestPolicy: string;
+    maxGuests: number;
+    roomType: string;
+    rooms: number;
+    square: number;
+    type: string;
+  };
+  location: string;
+}
 
-    }
-    info: {
-      bedRooms: number,
-      bedType: string,
-      description: string,
-      guestPolicy: string,
-      maxGuests: number,
-      roomType: string,
-      rooms: number,
-      square: number,
-      type: string
-    }
-    location: string,
-  }
-  
 export interface PropertyCardProps {
-    data: PropertyCardItem
-    opt?: string,
-  }
+  data: PropertyCardItem;
+  opt?: string;
+}
 
 export interface User {
-    id: number;
-    username: string;
-    email: string;
-    provider: string;
-    confirmed: boolean;
-    blocked: boolean;
-    createdAt: string;
-    updatedAt: string;
-    name: string | null;
-  }
-  
+  id: number;
+  username: string;
+  email: string;
+  provider: string;
+  confirmed: boolean;
+  blocked: boolean;
+  createdAt: string;
+  updatedAt: string;
+  name: string | null;
+  occupation: string;
+  adress: string | null;
+  phoneNumber: string | null;
+  workEmail: string | null;
+  avatar: { url: string; name: string };
+  profileImage: { url: string } | null;
+}
+
 export interface AuthResponse {
-    jwt: string;
-    user: User;
-  }
+  jwt: string;
+  user: User;
+}
 export interface UserState {
   user: User | null;
   isLogin: boolean;
-  token: string | null,
-  error: null | QueryError
+  token: string | null;
+  error: null | QueryError;
   setUser: (user: User) => void;
   logout: () => void;
   setToken: (token: string | null) => void;
@@ -82,7 +86,7 @@ export interface RegisterForm {
   password: string;
 }
 export interface QueryError {
-  status?: number
+  status?: number;
   message?: string;
-  code?: string
+  code?: string;
 }
