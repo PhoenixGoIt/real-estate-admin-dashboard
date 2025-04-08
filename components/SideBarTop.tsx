@@ -1,4 +1,5 @@
 "use client";
+import { useGetUser } from "@/lib/api/auth/auth-quary";
 import { useUserStore } from "@/lib/store/userStore";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,7 +18,9 @@ const SideBarTop = () => {
     avatar,
     profileImage,
   } = user;
-  const fullImageUrl = `${process.env.NEXT_PUBLIC_HOST_API}${avatar.url}`;
+  
+  console.log(useGetUser())
+  const fullImageUrl = `http://localhost:1337/uploads/1_W35_QU_Sv_Gpc_Lux_Po3_SRTH_4w_Photoroom_927268cadc.png`;
   return (
     <header className='w-full'>
       <div className='bg-white p-[12px]'>

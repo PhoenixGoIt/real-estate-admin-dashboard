@@ -58,7 +58,7 @@ export const useGetUser = () => {
       const response: AxiosResponse<User> = await GetUserApi();
       return response.data;
     },
-    enabled: true, // Запрос включен до вызова refetch
+    enabled: true,
     retry: false,
   });
 
@@ -102,5 +102,5 @@ export const useGetUser = () => {
     error,
   ]);
 
-  return { error, isLoading };
+  return {data, error, isLoading };
 };

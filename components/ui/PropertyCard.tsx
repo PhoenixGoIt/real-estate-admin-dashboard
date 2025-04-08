@@ -17,8 +17,8 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ data, opt }) => {
     square,
     type,
   } = data?.info;
-
   const fullImageUrl = `${process.env.NEXT_PUBLIC_HOST_API}${prevImage.url}`;
+
   if (opt === "horizontal") {
     return (
       <>
