@@ -1,13 +1,20 @@
-// components/UserProvider.tsx
 "use client";
-import { useGetUser } from "@/lib/api/auth/auth-quary";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useRef } from "react";
+import { useUserStore } from "../store/userStore";
+import { useRouter } from "next/navigation";
+import { checkAuth } from "../api/auth/auth-quary";
 
 const UserProvider = ({ children }: { children: ReactNode }) => {
-  const { isLoading } = useGetUser();
-  if (isLoading) return <div>Loading...</div>;
+ const {isLoading} =  checkAuth()
+ if (isLoading) {
+    return <h1>isLoading</h1>
+ }
+ return (
+   <section>
+    {children}
+   </section>
+ )
+}
 
-  return <>{children}</>;
-};
 
 export default UserProvider;

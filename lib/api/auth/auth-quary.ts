@@ -6,45 +6,66 @@ import { useUserStore } from "@/lib/store/userStore";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { AxiosResponse } from "axios";
+import { LogOut } from "lucide-react";
 
-export const useRegister = () => {
-  const { setToken, setUser, setError, token } = useUserStore();
+export const register = () => {
+  const { setToken, setUser, setError, token, logout } = useUserStore();
 
   const mutation = useMutation({
     mutationKey: ["register"],
     mutationFn: (data: RegisterForm) => RegisterApi(data),
     onSuccess: (response) => {
       setToken(response.data.jwt);
-      setAuthHeader(token);
+      setAuthHeader(token)
       setError(null);
       setUser(response.data.user);
     },
     onError: (error) => {
+      logout()
       setError(error);
     },
   });
   return mutation;
 };
 
-export const useLogin = () => {
-  const { setUser, setToken, setError, token } = useUserStore();
+export const login = () => {
+  const { setUser, setToken, setError, token, logout } = useUserStore();
   const mutation = useMutation({
     mutationKey: ["login"],
     mutationFn: (data: LoginForm) => LoginApi(data),
     onSuccess: (response) => {
       setToken(response.data.jwt);
-      setAuthHeader(token);
+      setAuthHeader(token)
       setError(null);
       setUser(response.data.user);
     },
     onError: (error) => {
+      logout()
       setError(error);
     },
   });
   return mutation;
 };
 
-export const useGetUser = () => {
+export const getUser = () => {
+  const {token} = useUserStore()
+  const { data, error, isLoading, isSuccess, isError } = useQuery<
+    User,
+    QueryError
+  >({
+    queryKey: ["get-user"],
+    queryFn: async () => {
+      const response: AxiosResponse<User> = await GetUserApi();
+      return response.data;
+    }, 
+    enabled: !!token,
+    
+  });
+
+  return { data, error, isLoading, isSuccess, isError };
+}
+
+export const checkAuth = () => {
   const { isLogin, token, setUser, logout, setToken, setError } =
     useUserStore();
   const router = useRouter();
@@ -53,12 +74,12 @@ export const useGetUser = () => {
     User,
     QueryError
   >({
-    queryKey: ["user"],
+    queryKey: ["check-auth"],
     queryFn: async () => {
       const response: AxiosResponse<User> = await GetUserApi();
       return response.data;
     },
-    enabled: true,
+    enabled: !!token,
     retry: false,
   });
 
@@ -71,6 +92,7 @@ export const useGetUser = () => {
     if (isSuccess) {
       setError(null);
       setUser(data);
+      router.push("/");
     } else {
       setError(error);
       if (error?.status === 401) {
@@ -102,5 +124,5 @@ export const useGetUser = () => {
     error,
   ]);
 
-  return { data, error, isLoading };
+  return { data, error, isLoading, isSuccess };
 };

@@ -1,5 +1,4 @@
 "use client";
-import { useGetUser } from "@/lib/api/auth/auth-quary";
 import { baseUrlConst } from "@/lib/constants/api";
 import { useUserStore } from "@/lib/store/userStore";
 import Image from "next/image";
