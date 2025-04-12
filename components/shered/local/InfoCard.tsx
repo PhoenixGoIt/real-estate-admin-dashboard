@@ -1,5 +1,5 @@
 "use client";
-import Count from "@/components/ui/Count";
+import Count from "@/components/shered/local/Count";
 import React from "react";
 import { PieChart, Pie, Cell } from "recharts";
 

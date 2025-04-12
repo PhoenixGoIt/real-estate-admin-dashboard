@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Search from "../ui/Search";
+import Search from "@/components/shered/local/Search";
 import { IoSend } from "react-icons/io5";
 import Image from "next/image";
 import Link from "next/link";

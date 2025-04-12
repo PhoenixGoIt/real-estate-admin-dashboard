@@ -1,11 +1,11 @@
 "use client";
 // import {  } from '@/lib/api/property/property-quary'
-import { property_list } from "@/lib/link";
+import { property_list } from "@/lib/constants/link";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import Gallery from "../ui/Gallery";
+import Gallery from "@/components/shered/local/Gallery";
 
 const PropertyDetails = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-import { message } from "./lib/link";
+import { message } from "./lib/constants/link";
 
 const config = {
   darkMode: ["class"],

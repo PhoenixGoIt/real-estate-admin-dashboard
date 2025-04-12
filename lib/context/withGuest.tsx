@@ -1,6 +1,6 @@
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/lib/store/userStore";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 export function withGuest<T extends JSX.IntrinsicAttributes>(
   WrappedComponent: React.ComponentType<T>,
@@ -9,9 +9,9 @@ export function withGuest<T extends JSX.IntrinsicAttributes>(
     const { isLogin } = useUserStore();
     const router = useRouter();
 
-    useEffect(() => {
+    useLayoutEffect(() => {
       if (isLogin) {
-        router.push("/");
+        router.replace("/");
       }
     }, [isLogin, router]);
 

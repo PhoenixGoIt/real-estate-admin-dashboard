@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import InfoCard from "../ui/InfoCard";
+import InfoCard from "@/components/shered/local/InfoCard";
 
 function Info() {
   const sale = [

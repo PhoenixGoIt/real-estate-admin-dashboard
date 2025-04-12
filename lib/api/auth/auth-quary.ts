@@ -1,7 +1,7 @@
 "use client";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { GetUserApi, LoginApi, RegisterApi, setAuthHeader } from "./auth-api";
-import { LoginForm, RegisterForm, User, QueryError } from "@/lib/@type";
+import { LoginForm, RegisterForm, User, QueryError } from "@/lib/types/@type";
 import { useUserStore } from "@/lib/store/userStore";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -102,5 +102,5 @@ export const useGetUser = () => {
     error,
   ]);
 
-  return {data, error, isLoading };
+  return { data, error, isLoading };
 };

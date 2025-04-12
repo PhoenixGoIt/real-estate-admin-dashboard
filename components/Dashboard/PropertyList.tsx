@@ -6,8 +6,8 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/shadcn/carousel";
-import { PropertyCard } from "../ui/PropertyCard";
+} from "@/components/shered/shadcn/carousel";
+import { PropertyCard } from "@/components/shered/local/PropertyCard";
 import { GetPropertyList } from "@/lib/api/property/property-quary";
 
 export const PropertyList = () => {

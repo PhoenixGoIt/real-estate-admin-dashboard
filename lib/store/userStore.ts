@@ -2,7 +2,7 @@
 "use client";
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-import { UserState } from "../@type";
+import { UserState } from "../types/@type";
 
 export const useUserStore = create<UserState>()(
   devtools(

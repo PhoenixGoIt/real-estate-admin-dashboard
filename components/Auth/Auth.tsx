@@ -2,12 +2,12 @@
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Input } from "../ui/Input";
+import { Input } from "@/components/shered/local/Input";
 import { useLogin, useRegister } from "@/lib/api/auth/auth-quary";
-import { withGuest } from "@/lib/withGuest";
+import { withGuest } from "@/lib/context/withGuest";
 import { useUserStore } from "@/lib/store/userStore";
 import Image from "next/image";
-import Button from "../ui/Button2";
+import Button from "@/components/shered/local/Button2";
 import * as yup from "yup";
 
 export const registerSchema = yup

@@ -1,5 +1,5 @@
 //helper.ts
-import { setAuthHeader } from "./api/auth/auth-api";
+import { setAuthHeader } from "../api/auth/auth-api";
 
 // export const callLogout = (logout: () => void) => {
 //   setAuthHeader('');

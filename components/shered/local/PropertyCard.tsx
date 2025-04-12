@@ -1,4 +1,4 @@
-import { PropertyCardProps } from "@/lib/@type";
+import { PropertyCardProps } from "@/lib/types/@type";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";

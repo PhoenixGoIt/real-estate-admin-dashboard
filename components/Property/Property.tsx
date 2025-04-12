@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Search from "../ui/Search";
+import Search from "@/components/shered/local/Search";
 
 import {
   Select,
@@ -9,13 +9,13 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/shadcn/select";
+} from "@/components/shered/shadcn/select";
 
 import Image from "next/image";
-import { PropertyCard } from "../ui/PropertyCard";
+import { PropertyCard } from "@/components/shered/local/PropertyCard";
 import Link from "next/link";
 import { GetPropertyList } from "@/lib/api/property/property-quary";
-import Button from "../ui/Button2";
+import Button from "@/components/shered/local/Button2";
 
 function Property() {
   const { data, isLoading } = GetPropertyList();

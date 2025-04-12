@@ -1,7 +1,13 @@
-import { LoginForm, RegisterForm, User } from "@/lib/@type";
+import {
+  baseUrlConst,
+  getUserConst,
+  loginUserConst,
+  registerUserConst,
+} from "@/lib/constants/api";
+import { LoginForm, RegisterForm, User } from "@/lib/types/@type";
 import axios, { AxiosResponse } from "axios";
 
-axios.defaults.baseURL = process.env.NEXT_PUBLIC_HOST_API;
+axios.defaults.baseURL = baseUrlConst;
 
 export const setAuthHeader = (token: string | null) => {
   if (!token) {
@@ -16,13 +22,13 @@ export const clearAuthHeader = () => {
 };
 
 export async function RegisterApi(data: RegisterForm) {
-  return await axios.post(`${process.env.NEXT_PUBLIC_REGISTER_API}`, data);
+  return await axios.post(registerUserConst, data);
 }
 
 export async function LoginApi(data: LoginForm) {
-  return await axios.post(`${process.env.NEXT_PUBLIC_LOGIN_API}`, data);
+  return await axios.post(loginUserConst, data);
 }
 
 export async function GetUserApi(): Promise<AxiosResponse<User>> {
-  return await axios.get(`${process.env.NEXT_PUBLIC_GETUSER_API}?populate=*`);
+  return await axios.get(getUserConst);
 }

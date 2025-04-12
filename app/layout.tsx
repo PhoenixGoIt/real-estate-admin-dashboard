@@ -1,12 +1,10 @@
 import type { Metadata } from "next";
 import { Manrope } from "next/font/google";
-
 import "./globals.css";
-
-import Providers from "@/lib/Prividers";
+import Providers from "@/lib/context/Prividers";
 import dynamic from "next/dynamic";
 
-const UserProvider = dynamic(() => import("@/lib/UserProvider"), {
+const UserProvider = dynamic(() => import("@/lib/context/UserProvider"), {
   ssr: false,
 });
 

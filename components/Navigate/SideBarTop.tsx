@@ -1,5 +1,6 @@
 "use client";
 import { useGetUser } from "@/lib/api/auth/auth-quary";
+import { baseUrlConst } from "@/lib/constants/api";
 import { useUserStore } from "@/lib/store/userStore";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,9 +19,7 @@ const SideBarTop = () => {
     avatar,
     profileImage,
   } = user;
-  
-  console.log(useGetUser())
-  const fullImageUrl = `http://localhost:1337/uploads/1_W35_QU_Sv_Gpc_Lux_Po3_SRTH_4w_Photoroom_927268cadc.png`;
+
   return (
     <header className='w-full'>
       <div className='bg-white p-[12px]'>
@@ -83,10 +82,10 @@ const SideBarTop = () => {
             <div className='flex items-center space-x-2'>
               <div className='relative  w-[40px] h-[40px] rounded-full'>
                 <Image
-                  src={fullImageUrl}
+                  src={`${baseUrlConst}`}
                   alt={avatar?.name}
                   fill
-                  className=' object-cover'
+                  className='object-cover'
                 />
               </div>
               <div className='hidden lg:block'>

@@ -1,15 +1,15 @@
 "use client";
 import React, { useState } from "react";
-import { Input } from "../ui/Input";
-import { TypeSelect } from "../ui/Selects";
+import { Input } from "@/components/shered/local/Input";
+import { TypeSelect } from "@/components/shered/local/Selects";
 import Link from "next/link";
-import { property_list } from "@/lib/link";
+import { property_list } from "@/lib/constants/link";
 import Image from "next/image";
-import { TextArea } from "../ui/TextArena";
-import MapBox from "../ui/MapBox";
-import Facility from "../ui/Facility";
-import InputFileUpload from "../ui/mui/InputFileUpload";
-import Button from "../ui/Button2";
+import { TextArea } from "@/components/shered/local/TextArena";
+import MapBox from "@/components/shered/local/MapBox";
+import Facility from "@/components/shered/local/Facility";
+import InputFileUpload from "@/components/shered/mui/InputFileUpload";
+import Button from "@/components/shered/local/Button2";
 const AddProperty = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
