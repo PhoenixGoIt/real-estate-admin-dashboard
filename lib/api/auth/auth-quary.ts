@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { AxiosResponse } from "axios";
 import { LogOut } from "lucide-react";
 
-export const useRegister = () => {
+export const register = () => {
   const { setToken, setUser, setError, token } = useUserStore();
 
   const mutation = useMutation({
@@ -16,6 +16,7 @@ export const useRegister = () => {
     mutationFn: (data: RegisterForm) => RegisterApi(data),
     onSuccess: (response) => {
       setToken(response.data.jwt);
+      setAuthHeader(token)
       setError(null);
       setUser(response.data.user);
     },
@@ -26,13 +27,14 @@ export const useRegister = () => {
   return mutation;
 };
 
-export const useLogin = () => {
+export const login = () => {
   const { setUser, setToken, setError, token } = useUserStore();
   const mutation = useMutation({
     mutationKey: ["login"],
     mutationFn: (data: LoginForm) => LoginApi(data),
     onSuccess: (response) => {
       setToken(response.data.jwt);
+      setAuthHeader(token)
       setError(null);
       setUser(response.data.user);
     },
@@ -43,19 +45,13 @@ export const useLogin = () => {
   return mutation;
 };
 
-export const useGetUser = (setUser: (data: User) => void, logout: () => void, setError: (error: null | QueryError) => void, token: string | null) => {
-  if (!token) {
-    console.log("No token")
-    logout()
-    return
-  }
-  setAuthHeader(token)
-  console.log("Auth Header Set")
+export const getUser = () => {
+  const {token} = useUserStore()
   const { data, error, isLoading, isSuccess, isError } = useQuery<
     User,
     QueryError
   >({
-    queryKey: ["user"],
+    queryKey: ["get-user"],
     queryFn: async () => {
       const response: AxiosResponse<User> = await GetUserApi();
       return response.data;
@@ -64,10 +60,61 @@ export const useGetUser = (setUser: (data: User) => void, logout: () => void, se
     
   });
 
-  if (isSuccess) {
-    setUser(data);
-    setError(null);
-  }
+  return { data, error, isLoading, isSuccess, isError };
+}
+
+export const checkAuth = () => {
+  const {token, setUser, setError, logout} = useUserStore()
+  const router = useRouter()
+  const { data, error, isLoading, isSuccess, isError } = useQuery<
+    User,
+    QueryError
+  >({
+    queryKey: ["check-auth"],
+    queryFn: async () => {
+      const response: AxiosResponse<User> = await GetUserApi();
+      return response.data;
+    }, 
+    enabled: !!token,
+    
+  });
+
+  useEffect(() => {
+    if (!token) {
+      router.push("/auth");
+      return;
+    }
+
+    if (isSuccess) {
+      setError(null);
+      setUser(data);
+    } else {
+      setError(error);
+      if (error?.status === 401) {
+        logout();
+        router.push("/auth");
+      } else if (error?.code === "ERR_NETWORK") {
+        logout();
+        router.push("/auth");
+      }
+    }
+
+    // if(isError) {
+    //   setError(error)
+    //   logout();
+    //   router.push('/auth');
+    //   console.log(`Query Error:  ${error.message}`)
+    // }
+  }, [
+    data,
+    token,
+    setUser,
+    logout,
+    router,
+    isSuccess,
+    isError,
+    error,
+  ]);
 
   return { data, error, isLoading, isSuccess };
 };

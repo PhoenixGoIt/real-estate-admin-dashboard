@@ -1,15 +1,11 @@
 "use client";
-import { useGetUser } from "@/lib/api/auth/auth-quary";
 import { ReactNode, useEffect, useRef } from "react";
 import { useUserStore } from "../store/userStore";
+import { useRouter } from "next/navigation";
+import { checkAuth } from "../api/auth/auth-quary";
 
 const UserProvider = ({ children }: { children: ReactNode }) => {
-  const ref = useRef()
-  const {setUser, logout, setError, token} = useUserStore()
-  useEffect(() => {
-    useGetUser(setUser, logout, setError, token)
-  }, [ref])
-
+  checkAuth()
  return (
    <section>
     {children}

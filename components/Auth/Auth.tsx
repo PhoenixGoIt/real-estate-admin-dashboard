@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Input } from "@/components/shered/local/Input";
-import { useLogin, useRegister } from "@/lib/api/auth/auth-quary";
+import { login, register } from "@/lib/api/auth/auth-quary";
 import { withGuest } from "@/lib/context/withGuest";
 import { useUserStore } from "@/lib/store/userStore";
 import Image from "next/image";
@@ -36,8 +36,8 @@ export type LoginForm = yup.InferType<typeof loginSchema>;
 const Auth = () => {
   const { setError } = useUserStore();
   const [isSignUp, setIsSignUp] = useState(false);
-  const registerMutation = useRegister();
-  const loginMutation = useLogin();
+  const registerMutation = register();
+  const loginMutation = login();
   const { error } = useUserStore();
   const renderErrorMessage = (error: any) => {
     switch (error?.response?.data?.error?.message) {
