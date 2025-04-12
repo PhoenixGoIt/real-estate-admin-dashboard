@@ -1,13 +1,12 @@
-import Property from '@/components/Property/Property'
-import React from 'react'
+import Property from "@/components/Property/Property";
+import React from "react";
 
 const page = () => {
   return (
     <section className='w-full h-full'>
-        <Property />
-        
+      <Property />
     </section>
-  )
-}
+  );
+};
 
-export default page
+export default page;
