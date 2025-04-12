@@ -9,7 +9,7 @@ import { AxiosResponse } from "axios";
 import { LogOut } from "lucide-react";
 
 export const register = () => {
-  const { setToken, setUser, setError, token } = useUserStore();
+  const { setToken, setUser, setError, token, logout } = useUserStore();
 
   const mutation = useMutation({
     mutationKey: ["register"],
@@ -21,6 +21,7 @@ export const register = () => {
       setUser(response.data.user);
     },
     onError: (error) => {
+      logout()
       setError(error);
     },
   });
@@ -28,7 +29,7 @@ export const register = () => {
 };
 
 export const login = () => {
-  const { setUser, setToken, setError, token } = useUserStore();
+  const { setUser, setToken, setError, token, logout } = useUserStore();
   const mutation = useMutation({
     mutationKey: ["login"],
     mutationFn: (data: LoginForm) => LoginApi(data),
@@ -39,6 +40,7 @@ export const login = () => {
       setUser(response.data.user);
     },
     onError: (error) => {
+      logout()
       setError(error);
     },
   });
@@ -64,9 +66,11 @@ export const getUser = () => {
 }
 
 export const checkAuth = () => {
-  const {token, setUser, setError, logout} = useUserStore()
-  const router = useRouter()
-  const { data, error, isLoading, isSuccess, isError } = useQuery<
+  const { isLogin, token, setUser, logout, setToken, setError } =
+    useUserStore();
+  const router = useRouter();
+  setAuthHeader(token);
+  const { data, error, isLoading, refetch, isSuccess, isError } = useQuery<
     User,
     QueryError
   >({
@@ -74,9 +78,9 @@ export const checkAuth = () => {
     queryFn: async () => {
       const response: AxiosResponse<User> = await GetUserApi();
       return response.data;
-    }, 
+    },
     enabled: !!token,
-    
+    retry: false,
   });
 
   useEffect(() => {
@@ -88,6 +92,7 @@ export const checkAuth = () => {
     if (isSuccess) {
       setError(null);
       setUser(data);
+      router.push("/");
     } else {
       setError(error);
       if (error?.status === 401) {
@@ -108,8 +113,11 @@ export const checkAuth = () => {
   }, [
     data,
     token,
+    isLogin,
+    refetch,
     setUser,
     logout,
+    setToken,
     router,
     isSuccess,
     isError,

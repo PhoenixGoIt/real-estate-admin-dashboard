@@ -5,7 +5,10 @@ import { useRouter } from "next/navigation";
 import { checkAuth } from "../api/auth/auth-quary";
 
 const UserProvider = ({ children }: { children: ReactNode }) => {
-  checkAuth()
+ const {isLoading} =  checkAuth()
+ if (isLoading) {
+    return <h1>isLoading</h1>
+ }
  return (
    <section>
     {children}
