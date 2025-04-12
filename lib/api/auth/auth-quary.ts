@@ -6,6 +6,7 @@ import { useUserStore } from "@/lib/store/userStore";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { AxiosResponse } from "axios";
+import { LogOut } from "lucide-react";
 
 export const useRegister = () => {
   const { setToken, setUser, setError, token } = useUserStore();
@@ -15,7 +16,6 @@ export const useRegister = () => {
     mutationFn: (data: RegisterForm) => RegisterApi(data),
     onSuccess: (response) => {
       setToken(response.data.jwt);
-      setAuthHeader(token);
       setError(null);
       setUser(response.data.user);
     },
@@ -33,7 +33,6 @@ export const useLogin = () => {
     mutationFn: (data: LoginForm) => LoginApi(data),
     onSuccess: (response) => {
       setToken(response.data.jwt);
-      setAuthHeader(token);
       setError(null);
       setUser(response.data.user);
     },
@@ -44,12 +43,15 @@ export const useLogin = () => {
   return mutation;
 };
 
-export const useGetUser = () => {
-  const { isLogin, token, setUser, logout, setToken, setError } =
-    useUserStore();
-  const router = useRouter();
-  setAuthHeader(token);
-  const { data, error, isLoading, refetch, isSuccess, isError } = useQuery<
+export const useGetUser = (setUser: (data: User) => void, logout: () => void, setError: (error: null | QueryError) => void, token: string | null) => {
+  if (!token) {
+    console.log("No token")
+    logout()
+    return
+  }
+  setAuthHeader(token)
+  console.log("Auth Header Set")
+  const { data, error, isLoading, isSuccess, isError } = useQuery<
     User,
     QueryError
   >({
@@ -57,50 +59,15 @@ export const useGetUser = () => {
     queryFn: async () => {
       const response: AxiosResponse<User> = await GetUserApi();
       return response.data;
-    },
-    enabled: true,
-    retry: false,
+    }, 
+    enabled: !!token,
+    
   });
 
-  useEffect(() => {
-    if (!token) {
-      router.push("/auth");
-      return;
-    }
+  if (isSuccess) {
+    setUser(data);
+    setError(null);
+  }
 
-    if (isSuccess) {
-      setError(null);
-      setUser(data);
-    } else {
-      setError(error);
-      if (error?.status === 401) {
-        logout();
-        router.push("/auth");
-      } else if (error?.code === "ERR_NETWORK") {
-        logout();
-        router.push("/auth");
-      }
-    }
-
-    // if(isError) {
-    //   setError(error)
-    //   logout();
-    //   router.push('/auth');
-    //   console.log(`Query Error:  ${error.message}`)
-    // }
-  }, [
-    data,
-    token,
-    isLogin,
-    refetch,
-    setUser,
-    logout,
-    setToken,
-    router,
-    isSuccess,
-    isError,
-    error,
-  ]);
-
-  return { data, error, isLoading };
+  return { data, error, isLoading, isSuccess };
 };

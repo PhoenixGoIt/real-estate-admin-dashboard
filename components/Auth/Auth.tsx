@@ -233,4 +233,4 @@ const Auth = () => {
   );
 };
 
-export default withGuest(Auth);
+export default Auth;

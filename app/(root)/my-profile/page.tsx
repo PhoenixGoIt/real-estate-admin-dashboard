@@ -11,7 +11,6 @@ const ProfilePage = () => {
 
   const handleLogout = () => {
     logout(); // Очистка данных пользователя в Zustand
-    setToken(null); // Обнуляем токен
     router.push("/auth"); // Перенаправляем на страницу авторизации
   };
 
