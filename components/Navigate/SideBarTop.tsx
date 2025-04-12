@@ -82,8 +82,8 @@ const SideBarTop = () => {
             <div className='flex items-center space-x-2'>
               <div className='relative  w-[40px] h-[40px] rounded-full'>
                 <Image
-                  src={`${baseUrlConst}`}
-                  alt={avatar?.name}
+                  src={"http://localhost:3000/logo.svg"}
+                  alt={'avatar'}
                   fill
                   className='object-cover'
                 />
