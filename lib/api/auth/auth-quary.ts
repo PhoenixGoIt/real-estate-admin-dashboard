@@ -74,49 +74,9 @@ export const useCheckAuthQuary = () => {
       return response.data;
     },
     enabled: !!token,
-<<<<<<< Updated upstream
     retryDelay: 1000,
     retry: 2,
   });
 
   return { data, error, isLoading, isSuccess, isError };
-=======
-    retry: false,
-  });
-
-  useEffect(() => {
-    if (!token) {
-      router.push("/auth");
-      return;
-    }
-
-    if (isSuccess) {
-      setError(null);
-      setUser(data);
-    } else {
-      setError(error);
-      if (error?.status === 401) {
-        logout();
-        router.push("/auth");
-      } else if (error?.code === "ERR_NETWORK") {
-        logout();
-        router.push("/auth");
-      }
-    }
-  }, [
-    data,
-    token,
-    isLogin,
-    refetch,
-    setUser,
-    logout,
-    setToken,
-    router,
-    isSuccess,
-    isError,
-    error,
-  ]);
-
-  return { data, error, isLoading };
->>>>>>> Stashed changes
 };
