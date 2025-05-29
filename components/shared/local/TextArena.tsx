@@ -1,19 +1,9 @@
 "use client";
 import { cn } from "@/lib/utils/utils";
 import React, { useState } from "react";
+import { TextArenaItem } from "./@types/TextArena.types";
 
-interface SearchItem {
-  title: string;
-  width?: string;
-  type?: string;
-  id?: string;
-  required?: boolean;
-  value?: string;
-  maxLength?: number;
-  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-}
-
-export const TextArea: React.FC<SearchItem> = ({
+export const TextArea: React.FC<TextArenaItem> = ({
   title,
   width,
   id,

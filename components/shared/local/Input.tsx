@@ -1,18 +1,8 @@
 "use client";
 import { cn } from "@/lib/utils/utils";
 import React from "react";
-import { UseFormRegisterReturn } from "react-hook-form";
+import { InputProps } from "./@types/Input.types";
 
-interface InputProps {
-  title: string;
-  width?: string;
-  type?: string;
-  id?: string;
-  required?: boolean;
-  value?: string;
-  register?: UseFormRegisterReturn;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
 
 export const Input: React.FC<InputProps> = ({
   title,
@@ -32,7 +22,7 @@ export const Input: React.FC<InputProps> = ({
         type={type || "text"}
         placeholder={title}
         value={value}
-        onChange={onChange} // добавляем обработчик изменений
+        onChange={onChange}
         {...register}
         className={cn(
           width

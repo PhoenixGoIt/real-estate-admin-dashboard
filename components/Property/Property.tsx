@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Search from "@/components/shered/local/Search";
+import Search from "@/components/shared/local/Search";
 
 import {
   Select,
@@ -9,13 +9,13 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/shered/shadcn/select";
+} from "@/components/shared/shadcn/select";
 
 import Image from "next/image";
-import { PropertyCard } from "@/components/shered/local/PropertyCard";
+import { PropertyCard } from "@/components/shared/local/PropertyCard";
 import Link from "next/link";
 import { GetPropertyList } from "@/lib/api/property/property-quary";
-import Button from "@/components/shered/local/Button2";
+import  {ButtonShared } from "@/components/shared/local/ButtonShared";
 
 function Property() {
   const { data, isLoading } = GetPropertyList();
@@ -25,7 +25,7 @@ function Property() {
         <div className='flex items-center mb-6  '>
           <h1 className='text-black font-[700] text-3xl'>Property</h1>
           <Link href='/property-list/add-property' className='ml-auto'>
-            <Button title='+ Add Property' />
+            <ButtonShared title='+ Add Property' />
           </Link>
         </div>
         <div className='bg-white w-full max-h-max rounded-lg p-5 mb-9'>

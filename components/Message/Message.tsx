@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import Search from "@/components/shered/local/Search";
+import Search from "@/components/shared/local/Search";
 import { IoSend } from "react-icons/io5";
 import Image from "next/image";
 import Link from "next/link";
@@ -124,13 +124,6 @@ const Message = () => {
   const [messages, setMessages] = useState<IMessage[]>(mockMessages);
   const [selectedChat, setSelectedChat] = useState<IChat | null>(null);
   const [newMessage, setNewMessage] = useState("");
-  // const [searchQuery, setSearchQuery] = useState("");
-
-  // Handler functions
-  // const handleSearch = (query: string) => {
-  //     setSearchQuery(query);
-  //     // Implement search logic when API is ready
-  // };
 
   const handleChatSelect = (chat: IChat) => {
     setSelectedChat(chat);

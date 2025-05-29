@@ -1,5 +1,4 @@
 import type { Config } from "tailwindcss";
-import { message } from "./lib/constants/link";
 
 const config = {
   darkMode: ["class"],
@@ -8,6 +7,7 @@ const config = {
     "./components/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
+    "./lib/**/*.{ts,tsx}"
   ],
   prefix: "",
   theme: {
@@ -27,6 +27,12 @@ const config = {
         message: "message 5 ease-in-out",
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        spinSlow: 'spin 2s ease infinite',
+      },
+       animationDelay: {
+        '-1.5s': '-1.5s',
+        '-1s': '-1s',
+        '-0.5s': '-0.5s',
       },
       keyframes: {
         pulse: {
@@ -52,6 +58,12 @@ const config = {
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
+        },
+        spin:{
+          '0%, 100%': { transform: 'translate(0)' },
+          '25%': { transform: 'translate(100%)' },
+          '50%': { transform: 'translate(100%, 100%)' },
+          '75%': { transform: 'translate(0, 100%)' },
         },
       },
       colors: {
@@ -118,7 +130,18 @@ const config = {
       sm: "calc(var(--radius) - 4px)",
     },
   },
-  plugins: [require("tailwindcss-animate")],
+   plugins: [
+    require("tailwindcss-animate"),
+    // Кастомный плагин animation-delay
+    //@ts-ignore
+    function ({ addUtilities, theme, e }) {
+      const delays = theme('animationDelay') as Record<string, string>;
+      const utilities = Object.entries(delays).map(([key, value]) => ({
+        [`.animation-delay-${e(key)}`]: { animationDelay: value },
+      }));
+      addUtilities(utilities);
+    },
+  ],
   safelist: [{ pattern: /^w-\[.*px\]/ }, { pattern: /^w-\[.*%\]/ }],
 } satisfies Config;
 

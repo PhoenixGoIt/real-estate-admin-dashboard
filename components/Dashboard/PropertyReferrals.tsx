@@ -1,5 +1,5 @@
 import React from "react";
-import PropertyReferralsChart from "@/components/shered/local/PropertyReferralsChart";
+import PropertyReferralsChart from "@/components/shared/local/PropertyReferralsChart";
 
 const PropertyReferrals = () => {
   return (

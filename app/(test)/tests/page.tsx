@@ -1,7 +1,14 @@
 "use client";
 
+import { Loading } from "@/components/shared/local/Loading";;
+
 function Tests() {
-  return <></>;
+
+  return (
+    <>
+      <Loading/>
+    </>
+  )
 }
 
 export default Tests;

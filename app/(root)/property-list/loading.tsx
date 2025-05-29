@@ -1,7 +1,12 @@
+import { Loading } from "@/components/shared/local/Loading";
 import React from "react";
 
 const loading = () => {
-  return <div>loading</div>;
+  return (
+      <section>
+        <Loading />
+      </section>
+    );
 };
 
 export default loading;
