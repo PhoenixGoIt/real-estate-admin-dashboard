@@ -1,19 +1,8 @@
 "use client";
-import Count from "@/components/shered/local/Count";
+import Count from "@/components/shared/local/Count";
 import React from "react";
 import { PieChart, Pie, Cell } from "recharts";
-
-interface PropertiesData {
-  name: string;
-  title: string;
-  totalProperties: number;
-  occupiedProperties: number;
-  color: string;
-}
-
-interface InfoCardProps {
-  data: PropertiesData[];
-}
+import { InfoCardProps } from "./@types/InfoCard.types";
 
 const InfoCard: React.FC<InfoCardProps> = ({ data }) => {
   const item = data[0]; // Since each InfoCard receives an array with a single item

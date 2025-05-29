@@ -1,10 +1,7 @@
 "use client";
 import React from "react";
 import CountUp from "react-countup";
-
-interface CountProps {
-  sum: number;
-}
+import { CountProps } from "./@types/Count.types";
 
 const Count: React.FC<CountProps> = ({ sum }) => {
   const st = sum / 1.78;

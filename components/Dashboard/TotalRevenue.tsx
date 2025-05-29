@@ -1,5 +1,5 @@
 import React from "react";
-import RevenueChart from "@/components/shered/chart/RevenueChart";
+import RevenueChart from "@/components/shared/chart/RevenueChart";
 
 export const TotalRevenue = () => {
   return (

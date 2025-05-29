@@ -4,17 +4,7 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
-interface PropertyItem {
-  name: string;
-  price: number;
-  image: string;
-  location: string;
-}
-
-interface PropertyFrameProps {
-  data: PropertyItem[];
-}
+import { PropertyFrameProps, PropertyItem } from "./@types/PropertyFrame.types";
 
 const CustomArrow: React.FC<any> = (props) => {
   const { className, style, onClick, direction } = props;

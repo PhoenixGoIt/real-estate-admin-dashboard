@@ -6,7 +6,7 @@ const initialFacility = {
   balcony: false,
   wifi: true,
   parkingArea: true,
-  smokingArea: true, // исправлено на "smokingArea"
+  smokingArea: true,
 };
 
 const Facility = () => {

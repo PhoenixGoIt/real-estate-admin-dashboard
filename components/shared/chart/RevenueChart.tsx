@@ -6,7 +6,7 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/shered/shadcn/chart";
+} from "@/components/shared/shadcn/chart";
 
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },

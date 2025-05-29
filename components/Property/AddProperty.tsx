@@ -1,15 +1,15 @@
 "use client";
 import React, { useState } from "react";
-import { Input } from "@/components/shered/local/Input";
-import { TypeSelect } from "@/components/shered/local/Selects";
+import { Input } from "@/components/shared/local/Input";
+import { TypeSelect } from "@/components/shared/local/Selects";
 import Link from "next/link";
 import { property_list } from "@/lib/constants/link";
 import Image from "next/image";
-import { TextArea } from "@/components/shered/local/TextArena";
-import MapBox from "@/components/shered/local/MapBox";
-import Facility from "@/components/shered/local/Facility";
-import InputFileUpload from "@/components/shered/mui/InputFileUpload";
-import Button from "@/components/shered/local/Button2";
+import { TextArea } from "@/components/shared/local/TextArena";
+import MapBox from "@/components/shared/local/MapBox";
+import Facility from "@/components/shared/local/Facility";
+import InputFileUpload from "@/components/shared/mui/InputFileUpload";
+import { ButtonShared } from "@/components/shared/local/ButtonShared";
 const AddProperty = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -110,7 +110,7 @@ const AddProperty = () => {
               <Facility />
             </div>
             <div className='mt-12 flex justify-end'>
-              <Button title='Сreate Property' type='submit' />
+              <ButtonShared title='Сreate Property' type='submit' />
             </div>
           </div>
         </form>

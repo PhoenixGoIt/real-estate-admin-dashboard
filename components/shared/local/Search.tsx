@@ -2,12 +2,8 @@
 import { cn } from "@/lib/utils/utils";
 import Image from "next/image";
 import React, { useState, ChangeEvent } from "react";
+import { SearchItem } from "./@types/Search.types";
 
-interface SearchItem {
-  title: string;
-  className: string;
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-}
 
 const Search: React.FC<SearchItem> = ({ title, className, onChange }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);

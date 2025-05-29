@@ -4,7 +4,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/shadcn/select";
+} from "@/components/shared/shadcn/select";
 import React from "react";
 
 export const TypeSelect = () => {

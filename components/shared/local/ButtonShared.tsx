@@ -1,16 +1,10 @@
 import { cn } from "@/lib/utils/utils";
 import React from "react";
+import { ButtonSharedProps } from "./@types/ButtonShared.types";
 
-interface ButtonProps {
-  onClick?: () => void;
-  title: string;
-  type?: "submit" | "reset" | "button" | undefined;
-  width?: string | "full" | "auto";
-  style?: string;
-  height?: string;
-}
 
-const Button: React.FC<ButtonProps> = ({
+
+export const ButtonShared: React.FC<ButtonSharedProps> = ({
   onClick,
   title,
   type,
@@ -42,4 +36,3 @@ const Button: React.FC<ButtonProps> = ({
   );
 };
 
-export default Button;

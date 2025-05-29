@@ -1,7 +1,12 @@
+import { Loading } from "@/components/shared/local/Loading";
 import React from "react";
 
 const loading = () => {
-  return <div className='fixed inset-0 bg-gray-900'></div>;
+  return (
+      <section>
+        <Loading />
+      </section>
+    );
 };
 
 export default loading;

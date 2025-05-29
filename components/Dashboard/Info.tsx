@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import InfoCard from "@/components/shered/local/InfoCard";
+import InfoCard from "@/components/shared/local/InfoCard";
 
 function Info() {
   const sale = [
