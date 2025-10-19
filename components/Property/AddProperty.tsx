@@ -1,15 +1,15 @@
 "use client";
 import React, { useState } from "react";
-import { Input } from "@/components/shared/local/Input";
+
 import { TypeSelect } from "@/components/shared/local/Selects";
 import Link from "next/link";
 import { property_list } from "@/lib/constants/link";
 import Image from "next/image";
-import { TextArea } from "@/components/shared/local/TextArena";
-import MapBox from "@/components/shared/local/MapBox";
+
 import Facility from "@/components/shared/local/Facility";
 import InputFileUpload from "@/components/shared/mui/InputFileUpload";
-import { ButtonShared } from "@/components/shared/local/ButtonShared";
+import { ButtonShared, Input, TextArena } from "../shared";
+
 const AddProperty = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
@@ -85,7 +85,7 @@ const AddProperty = () => {
               <div className='mb-3'>
                 <label className='text-md font-[500]'>Description</label>
               </div>
-              <TextArea title='Description' />
+              <TextArena title='Description' />
             </div>
             <div className='mt-6'>
               <InputFileUpload title='Upload Images' />
@@ -98,7 +98,7 @@ const AddProperty = () => {
                       Location<span className='text-red-600'>*</span>
                     </label>
                   </div>
-                  <MapBox />
+                  {/* <MapBox /> */}
                 </div>
               </div>
             </div>

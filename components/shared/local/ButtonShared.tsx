@@ -4,7 +4,8 @@ import { ButtonSharedProps } from "./@types/ButtonShared.types";
 
 
 
-export const ButtonShared: React.FC<ButtonSharedProps> = ({
+const ButtonShared: React.FC<ButtonSharedProps> = ({
+  isPending,
   onClick,
   title,
   type,
@@ -17,7 +18,7 @@ export const ButtonShared: React.FC<ButtonSharedProps> = ({
       <button
         type={type ? type : "button"}
         className={cn(
-          " w-full bg-primary_color text-white rounded-lg font-[400]",
+          " relative w-full bg-primary_color text-white rounded-lg font-[400]",
           width === "full"
             ? "w-full"
             : width === "auto"
@@ -30,9 +31,16 @@ export const ButtonShared: React.FC<ButtonSharedProps> = ({
         )}
         onClick={onClick}
       >
-        {title}
+        {isPending? '' : title}
+        {isPending? <div className='absolute top-[50%] left-[50%] w-[30px] h-[30px] translate-x-[-50%] translate-y-[-50%]'>
+      <hr className='absolute w-[15px] h-[15px] border-0 rounded-full bg-[#19A68C] animate-spinSlow animation-delay--1.5s' />
+      <hr className='absolute w-[15px] h-[15px] border-0 rounded-full bg-[#F63D3A] animate-spinSlow animation-delay--1s' />
+      <hr className='absolute w-[15px] h-[15px] border-0 rounded-full bg-[#FDA543] animate-spinSlow animation-delay--0.5s' />
+      <hr className='absolute w-[15px] h-[15px] border-0 rounded-full bg-[#193B48] animate-spinSlow' />
+    </div> : ''}
       </button>
     </div>
   );
 };
 
+export default ButtonShared

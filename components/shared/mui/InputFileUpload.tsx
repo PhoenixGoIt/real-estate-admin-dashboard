@@ -1,3 +1,4 @@
+'use client'
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
@@ -19,7 +20,7 @@ interface InputFileUploadProps {
   title: string;
 }
 
-export default function InputFileUpload({ title }: InputFileUploadProps) {
+const InputFileUpload = ({ title }: InputFileUploadProps) => {
   return (
     <Button
       component='label'
@@ -37,3 +38,4 @@ export default function InputFileUpload({ title }: InputFileUploadProps) {
     </Button>
   );
 }
+export default InputFileUpload

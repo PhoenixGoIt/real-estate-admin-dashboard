@@ -1,6 +1,7 @@
 "use client";
 
-import { Loading } from "@/components/shared/local/Loading";;
+import { Loading } from "@/components/shared";
+
 
 function Tests() {
 

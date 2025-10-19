@@ -3,9 +3,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { RegisterForm } from '../Login/LoginFormComponent.types';
 import { registerSchema } from '@/lib/schemas';
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useRegisterQuary } from '@/lib/api/auth/auth-quary';
-import { Input } from '@/components/shared/local/Input';
-import {ButtonShared} from '@/components/shared/local/ButtonShared';
+import { useRegisterQuery } from '@/lib/api/auth/auth-quary';
+import { ButtonShared, Input } from '@/components/shared';
 
 
 export const RegisterFormComponent = () => {
@@ -17,10 +16,10 @@ export const RegisterFormComponent = () => {
       resolver: yupResolver(registerSchema),
     });
 
-    const registerMutation = useRegisterQuary()
+    const {mutate, isError, isPaused, isPending, isSuccess} = useRegisterQuery()
 
     const onSubmit: SubmitHandler<RegisterForm> = (data) => {
-      registerMutation.mutate(data);
+      mutate(data);
     };
 
     return (
@@ -93,7 +92,7 @@ export const RegisterFormComponent = () => {
             <p className='text-red-600 text-sm'>{errors.password.message}</p>
           )}
         </div>
-        <ButtonShared title='Sign up' type='submit' width='full' height='40px' />
+        <ButtonShared isPending={isPending} title='Register' type='submit' width='full' height='40px' />
       </form>
     );
 };

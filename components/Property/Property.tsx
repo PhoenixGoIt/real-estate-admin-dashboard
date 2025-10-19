@@ -12,10 +12,10 @@ import {
 } from "@/components/shared/shadcn/select";
 
 import Image from "next/image";
-import { PropertyCard } from "@/components/shared/local/PropertyCard";
+
 import Link from "next/link";
 import { GetPropertyList } from "@/lib/api/property/property-quary";
-import  {ButtonShared } from "@/components/shared/local/ButtonShared";
+import { ButtonShared, PropertyCard } from "../shared";
 
 function Property() {
   const { data, isLoading } = GetPropertyList();

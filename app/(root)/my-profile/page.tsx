@@ -1,25 +1,14 @@
 // /app/profile/page.tsx
-"use client";
 
+import MyProfile from "@/components/MyProfile/MyProfile";
 import React from "react";
-import { useRouter } from "next/navigation";
-import { useUserStore } from "@/lib/store/userStore";
 
-const ProfilePage = () => {
-  const { logout, setToken } = useUserStore();
-  const router = useRouter();
-
-  const handleLogout = () => {
-    logout(); // Очистка данных пользователя в Zustand
-    router.push("/auth"); // Перенаправляем на страницу авторизации
-  };
-
+const page = () => {
   return (
-    <div>
-      <h1>My Profile</h1>
-      <button onClick={handleLogout}>Logout</button>
-    </div>
-  );
-};
+    <section className='w-full h-full'>
+      <MyProfile />
+    </section>
+  )
+}
 
-export default ProfilePage;
+export default page;

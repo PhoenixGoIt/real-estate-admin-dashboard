@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Timeout = () => {
+const Timeout = () => {
   return (
     <section className='min-w-screen min-h-screen bg-slate-100'>
         <div className='flex justify-center align-baseline'>
@@ -12,3 +12,4 @@ export const Timeout = () => {
     </section>
   )
 }
+export default Timeout

@@ -1,58 +1,62 @@
+// /components/UserProvider.tsx
 "use client";
 import { ReactNode, useEffect, useState } from "react";
-import { useCheckAuthQuary } from "../api/auth/auth-quary";
-import { Timeout } from "@/components/shared/local/Timeout";
+import { useCheckAuthQuery } from "../api/auth/auth-quary";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "../store/userStore";
-import { Loading } from "@/components/shared/local/Loading";
+import { Loading, Timeout } from "@/components/shared";
 
 const UserProvider = ({ children }: { children: ReactNode }) => {
-  const { isLoading, error, isSuccess } = useCheckAuthQuary();
-  const [status, setStatus] = useState<'unknowError' | 'error' | 'success' | 'loading' | ''>('')
-  const { token } = useUserStore();
+  const { isLoading, error, isSuccess } = useCheckAuthQuery();
+  const [status, setStatus] = useState<"unknowError" | "error" | "success" | "loading" | "initial">("initial");
+  const { token, isLogin } = useUserStore();
   const router = useRouter();
 
   useEffect(() => {
-    if(isLoading) {
-      setStatus("loading")
-    }
-  })
+    console.log("Состояние:", { isLoading, error, isSuccess, token, isLogin, status });
 
-  useEffect(()=> {
-    setStatus('')
-    if(!token) {
-      setStatus('error')
-      router.push('/auth')
+    if (isLoading) {
+      setStatus("loading");
+      return;
     }
-    if(error?.status === 401 || 403 ) {
-      setStatus('error')
-      router.push('/auth')
-    }
-     if(error?.message === 'Network Error'){
-      setStatus('unknowError')
-    }
-    if(isSuccess) {
-      setStatus('success')
-      router.push('/')
-    }
-  },[token, error, isSuccess])
 
-  if (status === 'loading') {
-    console.log("load")
-    return (
-      <>
-        <Loading />
-      </>
-    );
+    if (error?.status === 401 || error?.status === 403) {
+      setStatus("error");
+      router.push("/auth");
+      return;
+    }
+
+    if (error?.message === "Network Error") {
+      setStatus("unknowError");
+      return;
+    }
+
+    if (!token || !isLogin) {
+      setStatus("error");
+      router.push("/auth");
+      return;
+    }
+
+    if (isSuccess) {
+      setStatus("success");
+      router.push("/");
+      return;
+    }
+  }, [isLoading, error, isSuccess, token, isLogin, router]);
+
+  if (status === "loading") {
+    console.log("Рендеринг: Loading");
+    return <Loading />;
   }
 
-  if(status === 'unknowError') {
-    return <><Timeout/></>
+  if (status === "unknowError") {
+    console.log("Рендеринг: Timeout");
+    return <Timeout />;
   }
 
-  if(status === 'error' || 'success') {
-    return <>{children}</>;
-  } 
+  // Рендерим children для всех остальных состояний
+  console.log("Рендеринг: Children", { status });
+  return <>{children}</>;
 };
 
 export default UserProvider;

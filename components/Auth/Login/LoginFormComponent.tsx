@@ -2,11 +2,10 @@ import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { LoginForm } from '../Register/RegisterFormComponent.types';
 import { loginSchema } from '@/lib/schemas';
-import { Input } from '@/components/shared/local/Input';
 import { yupResolver } from "@hookform/resolvers/yup";
-import {ButtonShared} from '@/components/shared/local/ButtonShared';
-import { useLoginQuary } from '@/lib/api/auth/auth-quary';
+import { useLoginQuery } from '@/lib/api/auth/auth-quary';
 import { useRouter } from 'next/navigation';
+import { ButtonShared, Input } from '@/components/shared';
 
 export const LoginFormComponent = () => {
     const {
@@ -19,10 +18,10 @@ export const LoginFormComponent = () => {
       resolver: yupResolver(loginSchema),
     });
     const router = useRouter()
-    const loginMutation = useLoginQuary()
+    const {mutate, isError, isPaused, isPending, isSuccess} = useLoginQuery()
 
     const onSubmit: SubmitHandler<LoginForm> = (data) => {
-      loginMutation.mutate(data);
+      mutate(data);
     };
 
     return (
@@ -61,7 +60,7 @@ export const LoginFormComponent = () => {
             <p className='text-red-600 text-sm'>{errors.password.message}</p>
           )}
         </div>
-        <ButtonShared title='Log in' type='submit' width='full' height='40px' />
+        <ButtonShared isPending={isPending} title='Log in' type='submit' width='full' height='40px' />
       </form>
     );
 };

@@ -1,9 +1,10 @@
+'use client'
 import { PropertyCardProps } from "@/lib/types/@type";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-export const PropertyCard: React.FC<PropertyCardProps> = ({ data, opt }) => {
+const PropertyCard: React.FC<PropertyCardProps> = ({ data, opt }) => {
   const router = useRouter();
   const { id, prevImage, title, price, location } = data;
   const {
@@ -97,3 +98,5 @@ export const PropertyCard: React.FC<PropertyCardProps> = ({ data, opt }) => {
     </div>
   );
 };
+
+export default PropertyCard

@@ -24,9 +24,9 @@ export const useUserStore = create<UserState>()(
         },
       }),
       {
-        name: "user-store", // имя для сохранения состояния в localStorage
+        name: "user-store",
       },
     ),
-    { name: "UserStore" }, // имя для DevTools
+    { name: "UserStoreDev" }, 
   ),
 );

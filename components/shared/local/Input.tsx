@@ -4,7 +4,7 @@ import React from "react";
 import { InputProps } from "./@types/Input.types";
 
 
-export const Input: React.FC<InputProps> = ({
+const Input: React.FC<InputProps> = ({
   title,
   width,
   type,
@@ -33,3 +33,4 @@ export const Input: React.FC<InputProps> = ({
     </div>
   );
 };
+export default Input

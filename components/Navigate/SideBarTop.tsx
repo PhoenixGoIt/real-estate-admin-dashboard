@@ -1,5 +1,4 @@
 "use client";
-import { baseUrlConst } from "@/lib/constants/api";
 import { useUserStore } from "@/lib/store/userStore";
 import Image from "next/image";
 import Link from "next/link";
@@ -79,7 +78,7 @@ const SideBarTop = () => {
               height={24}
             />
             <div className='flex items-center space-x-2'>
-              <div className='relative  w-[40px] h-[40px] rounded-full'>
+              <div className='relative p-1 w-[40px] h-[40px] rounded-full'>
                 <Image
                   src={"http://localhost:3000/logo.svg"}
                   alt={'avatar'}

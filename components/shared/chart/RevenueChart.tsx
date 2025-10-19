@@ -1,3 +1,4 @@
+'use client'
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import {
   ChartConfig,
@@ -28,7 +29,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function RevenueChart() {
+const RevenueChart = () => {
   return (
     <div className=''>
       <div className='flex justify-between items-center mb-4'>

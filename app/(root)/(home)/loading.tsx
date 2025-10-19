@@ -1,4 +1,5 @@
-import { Loading } from "@/components/shared/local/Loading";
+
+import { Loading } from "@/components/shared";
 import React from "react";
 
 const loading = () => {

@@ -5,9 +5,9 @@ import { LoginForm, RegisterForm, User, QueryError } from "@/lib/types/@type";
 import { useUserStore } from "@/lib/store/userStore";
 import { AxiosResponse } from "axios";
 
-export const useRegisterQuary = () => {
+ const useRegisterQuery = () => {
   const { setToken, setUser, setError, token, logout } = useUserStore();
-  const mutation = useMutation({
+  const {mutate, isError, isPaused, isPending, isSuccess} = useMutation({
     mutationKey: ["register"],
     mutationFn: (data: RegisterForm) => RegisterApi(data),
     onSuccess: (response) => {
@@ -21,12 +21,12 @@ export const useRegisterQuary = () => {
       setError(error);
     },
   });
-  return mutation;
+  return {mutate, isError, isPaused, isPending, isSuccess};
 };
 
-export const useLoginQuary = () => {
+ const useLoginQuery = () => {
   const { setUser, setToken, setError, token, logout } = useUserStore();
-  const mutation = useMutation({
+  const {mutate, isError, isPaused, isPending, isSuccess} = useMutation({
     mutationKey: ["login"],
     mutationFn: (data: LoginForm) => LoginApi(data),
     onSuccess: (response) => {
@@ -40,10 +40,10 @@ export const useLoginQuary = () => {
       setError(error);
     },
   });
-  return mutation;
+  return {mutate, isError, isPaused, isPending, isSuccess};
 };
 
-export const useGetUserQuary = () => {
+ const useGetUserQuery = () => {
   const {token} = useUserStore()
   const { data, error, isLoading, isSuccess, isError } = useQuery<
     User,
@@ -61,7 +61,7 @@ export const useGetUserQuary = () => {
   return { data, error, isLoading, isSuccess, isError };
 }
 
-export const useCheckAuthQuary = () => {
+ const useCheckAuthQuery = () => {
   const { token } = useUserStore();
   setAuthHeader(token);
   const { data, error, isLoading, isSuccess, isError } = useQuery<
@@ -80,3 +80,10 @@ export const useCheckAuthQuary = () => {
 
   return { data, error, isLoading, isSuccess, isError };
 };
+
+export {
+  useRegisterQuery,
+  useLoginQuery,
+  useGetUserQuery,
+  useCheckAuthQuery,
+}

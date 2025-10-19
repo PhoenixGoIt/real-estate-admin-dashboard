@@ -4,6 +4,7 @@ import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { APIProvider } from "@vis.gl/react-google-maps";
+import UserProvider from "./UserProvider";
 
 
 export default function Providers({ children }: { children: React.ReactNode }) {
@@ -11,7 +12,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
   return (
     <QueryClientProvider client={queryClient}>
       <APIProvider apiKey='AIzaSyD5qvorB-eE-cqvl4XOTgDy8BxWqVPeNeA'>
+        <UserProvider>
             {children}
+            </UserProvider>
       </APIProvider>
       <ReactQueryDevtools initialIsOpen={true} />
     </QueryClientProvider>

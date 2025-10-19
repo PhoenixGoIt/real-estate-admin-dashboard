@@ -7,8 +7,8 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/shared/shadcn/carousel";
-import { PropertyCard } from "@/components/shared/local/PropertyCard";
 import { GetPropertyList } from "@/lib/api/property/property-quary";
+import { PropertyCard } from "../shared";
 
 export const PropertyList = () => {
   const { data, isLoading, error } = GetPropertyList();

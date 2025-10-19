@@ -1,4 +1,5 @@
 export type ButtonSharedProps = {
+  isPending?: boolean;
   onClick?: () => void;
   title: string;
   type?: "submit" | "reset" | "button" | undefined;

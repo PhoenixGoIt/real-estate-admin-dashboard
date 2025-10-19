@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Loading = () => {
+const Loading = () => {
   return (
     <div className='absolute top-[50%] left-[50%] w-[200px] h-[200px] translate-x-[-50%] translate-y-[-50%]'>
       <hr className='absolute w-[100px] h-[100px] border-0 rounded-full bg-[#19A68C] animate-spinSlow animation-delay--1.5s' />
@@ -10,3 +10,5 @@ export const Loading = () => {
     </div>
   );
 };
+
+export default Loading

@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils/utils";
 import React, { useState } from "react";
 import { TextArenaItem } from "./@types/TextArena.types";
 
-export const TextArea: React.FC<TextArenaItem> = ({
+ const TextArea: React.FC<TextArenaItem> = ({
   title,
   width,
   id,
@@ -44,3 +44,5 @@ export const TextArea: React.FC<TextArenaItem> = ({
     </div>
   );
 };
+
+export default TextArea
