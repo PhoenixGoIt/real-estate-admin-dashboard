@@ -80,7 +80,7 @@ const SideBarTop = () => {
             <div className='flex items-center space-x-2'>
               <div className='relative p-1 w-[40px] h-[40px] rounded-full'>
                 <Image
-                  src={"http://localhost:3000/logo.svg"}
+                  src={"http://localhost:3000/Ava/UserAva.jpg"}
                   alt={'avatar'}
                   fill
                   className='object-cover'

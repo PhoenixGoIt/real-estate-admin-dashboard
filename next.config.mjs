@@ -14,6 +14,12 @@ const nextConfig = {
         port: "1337",
         pathname: "/**",
       },
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "3000",  // ← Add this for your Next.js dev server
+        pathname: "/**",
+      },
     ],
   },
 };
